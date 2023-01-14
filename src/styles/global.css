@@ -1,0 +1,33 @@
+input {
+  @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+}
+
+textarea {
+  @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+}
+
+select {
+  @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+}
+
+button.filledPrimary {
+  @apply bg-primary shadow-buttonShadow font-bold;
+  text-align: -webkit-center;
+}
+
+button.filledTertiary {
+  @apply bg-tertiary shadow-buttonShadow font-bold text-white;
+  text-align: -webkit-center;
+}
+
+.imgContainer {
+  text-align: -webkit-center;
+}
+
+.modal {
+  @apply z-10 fixed top-0 left-0 backdrop-blur-[0.7px] w-full h-full bg-opacity-40 bg-white flex justify-around items-center text-center;
+}
+
+.modalContainer{
+  @apply grid items-center shadow-buttonShadow
+}
