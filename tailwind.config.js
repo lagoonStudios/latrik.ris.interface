@@ -6,16 +6,18 @@ module.exports = {
   ],
   theme: {
     colors: {
+      primary: '#93eef3',
+      secondary: '#c4f5f9',
+      tertiary: '#809fdc',
       transparent: "transparent",
       current: "currentColor",
-      danger: "#dc2626",
+      danger: "#FF0000",
       white: "#ffffff",
       grey: '#D9D9D9',
       black: '000000',
       blue: '#77acd6',
-      primary: '#93eef3',
-      secondary: '#c4f5f9',
-      tertiary: '#809fdc',
+      green: '#98E47E',
+      orange: '#FF7A00'
     },
     extend: {
       boxShadow: {

@@ -9,7 +9,7 @@ import SuccessModal from "./SuccessModal";
 
 export default function RegisterPatient() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [step, setStep] = React.useState<number>(2);
+  const [step, setStep] = React.useState<number>(1);
   const [patient, setPatient] = React.useState<Patient>(new Patient({}));
   const [study, setStudy] = React.useState<Study>();
   const [isOpenConfirmModal, setisOpenConfirmModal] = React.useState(false);
