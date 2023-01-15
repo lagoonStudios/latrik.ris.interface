@@ -14,6 +14,7 @@ module.exports = {
       danger: "#FF0000",
       white: "#ffffff",
       grey: '#D9D9D9',
+      lightGrey: '#f1f3fa',
       black: '000000',
       blue: '#77acd6',
       green: '#98E47E',

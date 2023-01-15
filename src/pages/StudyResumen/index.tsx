@@ -13,16 +13,14 @@ function StudyResumen() {
       new Patient({
         id: "",
         patientId: id,
-        name: "Leonardo",
+        name: "Jhon Doe",
         email:
           "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum vitae nisi delectus esse velit sit molestias non doloribus necessitatibus quasi error beatae laborum sapiente accusantium commodi odit, voluptatum ex minus!",
         phoneNumber: "+123123",
         birthDate: "12/12/21",
         gender: "Male",
-        allergies:
-          "",
-        medicalCondition:
-          ""
+        allergies: "",
+        medicalCondition: "",
       })
     );
   }, []);
@@ -67,7 +65,7 @@ function StudyResumen() {
                     </label>
                   </p>
                   <p className="text-lg">
-                    Edad: <label className="font-semibold">12</label>
+                    Edad: <label className="font-semibold">24</label>
                   </p>
                   <p className="text-lg">
                     Documento de identidad:{" "}
@@ -83,9 +81,13 @@ function StudyResumen() {
               </div>
               <div className="col-span-1">
                 <h6 className="font-semibold text-2xl">Alergias</h6>
-                <p>{patient.allergies ? patient.allergies : 'Sin detalles'}</p>
+                <p>{patient.allergies ? patient.allergies : "Sin detalles"}</p>
                 <h6 className="font-semibold text-2xl">Condición médica</h6>
-                <p>{patient.medicalCondition ? patient.medicalCondition : 'Sin detalles'}</p>
+                <p>
+                  {patient.medicalCondition
+                    ? patient.medicalCondition
+                    : "Sin detalles"}
+                </p>
               </div>
             </div>
           </section>
@@ -98,8 +100,7 @@ function StudyResumen() {
           title="Envíar"
         >
           <label>
-            Envíar {' '}
-            <img src={ArrowSmallRight} className="inline" alt="" />
+            Envíar <img src={ArrowSmallRight} className="inline" alt="" />
           </label>
         </button>
       </div>
