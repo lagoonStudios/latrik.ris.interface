@@ -103,7 +103,7 @@ function PatientList() {
                       // Apply the header cell props
                       <th
                         {...column.getHeaderProps()}
-                        className="border border-lightGrey"
+                        className="border border-lightGrey p-3"
                       >
                         {
                           // Render the header
@@ -132,7 +132,7 @@ function PatientList() {
                         return (
                           <td
                             {...cell.getCellProps()}
-                            className="px-5 border border-lightGrey"
+                            className="px-5 border border-lightGrey p-3"
                           >
                             {
                               // Render the cell contents

@@ -31,7 +31,7 @@ function PatientForm({
       email: "",
       phoneNumber:  "",
       birthDate: "",
-      gender: Gender.Other,
+      gender: Gender[0],
       allergies:"",
       medicalCondition: "",
     }, false)

@@ -4,9 +4,7 @@ function ConfirmModal({ setisOpenConfirmModal, submitInfo }: { setisOpenConfirmM
   return (
     <div className="modal">
       <div className="modalContainer bg-primary w w-1/2 h-1/2 rounded-3xl p-10 max-w-7xl">
-        <div className="imgContainer">
           <img src={TriangleWarning} alt="Alert icon" className="w-48 h-48" />
-        </div>
         <h3 className="block font-bold text-4xl">
           ¿Estás seguro que los datos introducidos son correctos?
         </h3>

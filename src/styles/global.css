@@ -1,27 +1,28 @@
 input {
   @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+  border-bottom-width: 1px;
 }
 
 textarea {
   @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+  border-bottom-width: 1px;
 }
 
 select {
   @apply bg-transparent border-solid border-black border-b outline-0 block focus:border-b-blue invalid:border-b-danger;
+  border-bottom-width: 1px;
+}
+
+img {
+  @apply m-auto text-center
 }
 
 button.filledPrimary {
   @apply bg-primary shadow-buttonShadow font-bold;
-  text-align: -webkit-center;
 }
 
 button.filledTertiary {
-  @apply bg-tertiary shadow-buttonShadow font-bold text-white;
-  text-align: -webkit-center;
-}
-
-.imgContainer {
-  text-align: -webkit-center;
+  @apply bg-tertiary shadow-buttonShadow font-bold text-white text-center;
 }
 
 .modal {

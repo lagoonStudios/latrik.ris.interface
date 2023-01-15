@@ -58,7 +58,7 @@ function StudyResumen() {
                 <div className="text-3xl">
                   <p>
                     <label className="font-semibold">
-                      patient.gender
+                      {patient.gender}
                     </label>
                   </p>
                   <p>

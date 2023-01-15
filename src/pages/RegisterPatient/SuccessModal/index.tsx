@@ -7,9 +7,7 @@ function SuccessModal({ createNewStudy }: { createNewStudy: Function }) {
   return (
     <div className="modal">
       <div className="modalContainer  bg-primary rounded-3xl p-14 w-10/12 max-w-7xl">
-        <div className="imgContainer">
           <img src={Check} className="w-48 h-48" alt="Icono check" />
-        </div>
         <h3 className="block font-bold text-4xl">
           Estudio creado correctamente
         </h3>
