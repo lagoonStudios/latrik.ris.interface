@@ -1,4 +1,4 @@
-import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Routes, Route, HashRouter } from 'react-router-dom';
 import { SecretaryResumen } from "./pages/SecretaryResumen/index";
 import RegisterPatient from "./pages/RegisterPatient/index";
 import Layout from "./pages/Layout";
@@ -8,7 +8,7 @@ import StudyResumen from "pages/StudyResumen";
 
 function App() {
   return (
-    <BrowserRouter>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
           <Route index element={<SecretaryResumen />} />
@@ -19,7 +19,7 @@ function App() {
           <Route path="*" element={<SecretaryResumen />} />
         </Route>
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
 
