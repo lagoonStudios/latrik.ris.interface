@@ -1,7 +1,7 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
 //   import { useEffect } from 'react';
-import { Patient } from "models/latrikModels";
+import { Gender, Patient } from "models/latrikModels";
 //   import axiosFetch from "src/config/axios";
 
 function PatientForm({
@@ -22,6 +22,20 @@ function PatientForm({
   //   };
   //   getPatients();
   // }, []);
+
+  const resetForm = (action: Function) => {
+    //Funcion setValues()
+    action({
+      patientId: "",
+      name: "",
+      email: "",
+      phoneNumber:  "",
+      birthDate: "",
+      gender: Gender.Other,
+      allergies:"",
+      medicalCondition: "",
+    }, false)
+  }
 
   return (
     <Formik
@@ -65,114 +79,119 @@ function PatientForm({
         allergies: Yup.string(),
         medicalCondition: Yup.string(),
       })}
-      onReset={() => console.log("reset: ")}
     >
-      <Form
-        className="bg-white container py-10 px-28 rounded-3xl border-primary border"
-        noValidate
-      >
-        <h1 className="text-center text-black text-4xl font-bold mb-5">
-          Registro de paciente
-        </h1>
+      {({ isValid, setValues }) => (
+        <Form
+          className="bg-white container py-10 px-28 rounded-3xl border-primary border"
+          noValidate
+        >
+          <h1 className="text-center text-black text-4xl font-bold mb-5">
+            Registro de paciente
+          </h1>
 
-        <label htmlFor="name">Documento de identidad</label>
-        <Field
-          id="patientId"
-          name="patientId"
-          type="string"
-          className="w-full invalid invalid:border-b-danger"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="patientId" />
-        </p>
+          <label htmlFor="name">Documento de identidad</label>
+          <Field
+            id="patientId"
+            name="patientId"
+            type="string"
+            className="w-full invalid invalid:border-b-danger"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="patientId" />
+          </p>
 
-        <label htmlFor="name">Nombre</label>
-        <Field
-          id="name"
-          name="name"
-          type="text"
-          className="w-full invalid:border-b-danger"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="name" />
-        </p>
+          <label htmlFor="name">Nombre</label>
+          <Field
+            id="name"
+            name="name"
+            type="text"
+            className="w-full invalid:border-b-danger"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="name" />
+          </p>
 
-        <label htmlFor="email">Email</label>
-        <Field id="email" name="email" type="email" className="w-full" />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="email" />
-        </p>
+          <label htmlFor="email">Email</label>
+          <Field id="email" name="email" type="email" className="w-full" />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="email" />
+          </p>
 
-        <label htmlFor="gender">Género</label>
-        <Field id="gender" name="gender" as="select" className="w-full">
-          <option value="Hombre">Hombre</option>
-          <option value="Mujer">Mujer</option>
-          <option value="Otro">Otro</option>
-        </Field>
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="gender" />
-        </p>
+          <label htmlFor="gender">Género</label>
+          <Field id="gender" name="gender" as="select" className="w-full">
+            <option value="Hombre">Hombre</option>
+            <option value="Mujer">Mujer</option>
+            <option value="Otro">Otro</option>
+          </Field>
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="gender" />
+          </p>
 
-        <label htmlFor="phoneNumber">Número de telefono</label>
-        <Field
-          id="phoneNumber"
-          name="phoneNumber"
-          type="string"
-          className="w-full"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="phoneNumber" />
-        </p>
+          <label htmlFor="phoneNumber">Número de telefono</label>
+          <Field
+            id="phoneNumber"
+            name="phoneNumber"
+            type="string"
+            className="w-full"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="phoneNumber" />
+          </p>
 
-        <label htmlFor="birthDate">Fecha de nacimiento</label>
-        <Field
-          id="birthDate"
-          name="birthDate"
-          type="date"
-          max={today}
-          className="w-full"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="birthDate" />
-        </p>
+          <label htmlFor="birthDate">Fecha de nacimiento</label>
+          <Field
+            id="birthDate"
+            name="birthDate"
+            type="date"
+            max={today}
+            className="w-full"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="birthDate" />
+          </p>
 
-        <label htmlFor="allergies">Alergias</label>
-        <Field
-          id="allergies"
-          name="allergies"
-          as="textarea"
-          className="w-full"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="allergies" />
-        </p>
+          <label htmlFor="allergies">Alergias</label>
+          <Field
+            id="allergies"
+            name="allergies"
+            as="textarea"
+            className="w-full"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="allergies" />
+          </p>
 
-        <label htmlFor="medicalCondition">Condición médica</label>
-        <Field
-          id="medicalCondition"
-          name="medicalCondition"
-          as="textarea"
-          className="w-full"
-        />
-        <p className="block mb-3 text-danger">
-          <ErrorMessage name="medicalCondition" />
-        </p>
+          <label htmlFor="medicalCondition">Condición médica</label>
+          <Field
+            id="medicalCondition"
+            name="medicalCondition"
+            as="textarea"
+            className="w-full"
+          />
+          <p className="block mb-3 text-danger">
+            <ErrorMessage name="medicalCondition" />
+          </p>
 
-        <div className="flex justify-around mt-20">
-          <button
-            type="reset"
-            className="filledTertiary rounded-xl w-44 h-12"
-          >
-            Limpiar
-          </button>
-          <button
-            type="submit"
-            className="filledTertiary rounded-xl w-44 h-12"
-          >
-            Continuar
-          </button>
-        </div>
-      </Form>
+          <div className="flex justify-around mt-20">
+            <button
+              type="button"
+              onClick={() => {
+                resetForm(setValues);
+              }}
+              className="filledTertiary rounded-xl w-44 h-12"
+            >
+              Limpiar
+            </button>
+            <button
+              type="submit"
+              className="filledTertiary rounded-xl w-44 h-12 disabled:opacity-50"
+              disabled={!isValid}
+            >
+              Continuar
+            </button>
+          </div>
+        </Form>
+      )}
     </Formik>
   );
 }

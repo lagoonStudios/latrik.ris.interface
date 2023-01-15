@@ -5,7 +5,7 @@ export class Patient {
   email: string;
   phoneNumber?: string;
   birthDate?: Date | string;
-  gender: "Male" | "Female" | "Other";
+  gender: Gender;
   allergies?: string;
   medicalCondition?: string;
 
@@ -26,16 +26,10 @@ export class Study {
   id: string;
   patient_id: string;
   studyDate: Date | string;
-  modality: "CT" | "MR" | "PR" | "CR";
+  modality: Modality;
   process: string;
-  state:
-    | "Espera"
-    | "Proceso"
-    | "Por informar"
-    | "Completado"
-    | "Cerrado"
-    | "Cancelado";
-  priority: "Low" | "Normal" | "Urgent" | "Emergency";
+  state: Status
+  studyPriority: StudyPriority;
   report?: any;
   referentDoctorId?: string;
   assignedTecnician?: string;
@@ -50,7 +44,7 @@ export class Study {
     this.modality = data.modality;
     this.process = data.process;
     this.state = data.state;
-    this.priority = data.priority;
+    this.studyPriority = data.studyPriority;
     this.report = data.report;
     this.referentDoctorId = data.referentDoctorId;
     this.assignedTecnician = data.assignedTecnician;
@@ -60,44 +54,48 @@ export class Study {
   }
 }
 
-export class Gender {
-  name: "Male" | "Female" | "Other";
-
-  constructor(gender: "Male" | "Female" | "Other") {
-    this.name = gender;
-  }
-
-  getGender() {
-    switch (this.name) {
-      case "Male":
-        return "Hombre";
-      case "Female":
-        return "Mujer";
-      case "Other":
-        return "Otro";
-    }
-  }
+export enum Gender {
+  Male,
+  Female,
+  Other,
+  Na
 }
 
-export enum Priority {
-  Low = "Low",
-  Normal = "Normal",
-  Urgent = "Urgent",
-  Emergency = "Emergency",
+export enum StudyPriority {
+  LOW,
+  NORMAL,
+  URGENT,
+  EMERGENCY,
 }
 
-export enum State {
-  "Espera",
-  "Proceso",
-  "Por informar",
-  "Completado",
-  "Cerrado",
-  "Cancelado",
+export enum Status {
+  PENDING,
+  IN_PROCESS,
+  TO_REPORT,
+  REPORTING,
+  REPORTED,
+  FINISHED,
+  SUSPENDED,
+  CANCELED,
 }
 
 export enum Modality {
-  "CT",
-  "MR",
-  "PR",
-  "CR",
+  CR,
+  DX,
+  CT,
+  MR,
+  XA,
+  MG,
+  US,
+  PT,
+  NM,
+  RF,
+  RG,
+  PX,
+  ES,
+  XC,
+  GM,
+  SC,
+  OT,
+  SR
 }

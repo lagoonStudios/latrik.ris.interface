@@ -2,33 +2,44 @@ import React from "react";
 import { BackButton } from "components/BackButton";
 import { Column, Row, useTable } from "react-table";
 import { Link } from "react-router-dom";
+import {
+  Modality,
+  Status,
+  StudyPriority,
+} from "../../models/latrikModels";
 
 function StudyList() {
   const data = React.useMemo(
     () => [
       {
-        col1: "123123asd",
-        col2: "123567",
-        col3: "Jhon Doe",
-        col4: "En espera",
+        id: "12317asndkj",
+        name: "Jhon Doe",
+        patientId: "1239712",
+        studyDate: "12/12/22",
+        modality: Modality[0],
+        process: 'Proceso1',
+        status: Status[1],
+        priority: StudyPriority[2],
       },
       {
-        col1: "qweasd1231",
-        col2: "8759854",
-        col3: "Pepito Perez",
-        col4: "En espera",
+        id: "12317asndkj",
+        name: "Jhon Doe",
+        patientId: "1239712",
+        studyDate: "12/12/22",
+        modality: Modality[0],
+        process: 'Proceso1',
+        status: Status[1],
+        priority: StudyPriority[2],
       },
       {
-        col1: "asdhlk123a",
-        col2: "v88767812",
-        col3: "Maria de La Caridad",
-        col4: "En espera",
-      },
-      {
-        col1: "asaoshdnkjzxcb",
-        col2: "v123365",
-        col3: "Juanita Barrio",
-        col4: "En espera",
+        id: "12317asndkj",
+        name: "Jhon Doe",
+        patientId: "1239712",
+        studyDate: "12/12/22",
+        modality: Modality[0],
+        process: 'Proceso1',
+        status: Status[1],
+        priority: StudyPriority[2],
       },
     ],
     []
@@ -37,20 +48,37 @@ function StudyList() {
   const columns: Column[] = React.useMemo(() => {
     return [
       {
-        Header: "Estudio",
-        accessor: "col1", // accessor is the "key" in the data
-      },
-      {
-        Header: "Doc de identidad",
-        accessor: "col2",
+        Header: "id",
+        accessor: "id",
+        show: false,
       },
       {
         Header: "Nombre",
-        accessor: "col3",
+        accessor: "name",
+      },
+      {
+        Header: "Doc de identidad",
+        accessor: "patientId",
+      },
+      {
+        Header: "Fecha del estudio",
+        accessor: "studyDate",
+      },
+      {
+        Header: "Modalidad",
+        accessor: "modality",
+      },
+      {
+        Header: "Procedimiento",
+        accessor: "process",
       },
       {
         Header: "Estatus",
-        accessor: "col4",
+        accessor: "status",
+      },
+      {
+        Header: "Prioridad",
+        accessor: "priority",
       },
     ];
   }, []);
@@ -60,10 +88,10 @@ function StudyList() {
       ...columns,
       {
         id: "Action",
-        Header: "Action",
+        Header: "Acción",
         Cell: ({ row }: { row: Row }) => {
           return (
-            <Link to={`/StudyResumen/${row.values.col1}/`}>
+            <Link to={`/StudyResumen/${row.values.id}/`}>
               <button className="underline text-blue font-bold" type="button">
                 Atender
               </button>
@@ -74,7 +102,10 @@ function StudyList() {
     ]);
   };
 
-  const tableInstance = useTable({ columns, data }, tableHooks);
+  const tableInstance = useTable(
+    { columns, data, initialState: { hiddenColumns: ["id"] } },
+    tableHooks
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;

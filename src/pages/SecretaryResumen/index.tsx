@@ -24,17 +24,17 @@ export function SecretaryResumen() {
             <button
               className="w-96 h-80 filledPrimary p-4 text-center rounded-3xl"
               type="button"
-              title="Crear nuevo estudio"
+              title="Crear Nuevo Eestudio"
             >
               <img
                 src={AddPerson}
-                alt="Ir a crear nuevo estudio"
-                title="Crear nuevo estudio"
+                alt="Ir a Crear Nuevo Estudio"
+                title="Crear Nuevo Estudio"
               />
             </button>
             <br />
             <h3 className="text-center text-2xl font-bold mt-9">
-              Crear nuevo estudio
+              Crear Nuevo Estudio
             </h3>
           </Link>
           <div>
@@ -42,16 +42,16 @@ export function SecretaryResumen() {
               <button
                 className="w-96 h-80 filledPrimary p-4 text-center rounded-3xl"
                 type="button"
-                title="Lista de estudios"
+                title="Lista de Estudios"
               >
                 <img
                   src={ListCheck}
-                  alt="Ir a lista de estudios"
-                  title="Lista de estudios"
+                  alt="Ir a lista de Estudios"
+                  title="Lista de Estudios"
                 />
               </button>
               <h3 className="text-center text-2xl font-bold mt-9">
-                Lista de estudios
+                Lista de Estudios
               </h3>
             </Link>
           </div>

@@ -1,5 +1,5 @@
 import React from "react";
-import { Patient, Study } from "../../models/latrikModels";
+import { Patient, Study } from '../../models/latrikModels';
 import { BackButton } from "../../components/BackButton/index";
 import PatientForm from "components/PatientForm";
 import StudyForm from "components/StudyForm";
@@ -55,6 +55,7 @@ export default function RegisterPatient() {
               setStudy={setStudy}
               setStep={setStep}
               setisOpenConfirmModal={setisOpenConfirmModal}
+              patientId={patient.patientId}
             />
           )}
         </div>

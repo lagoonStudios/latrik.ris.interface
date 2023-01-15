@@ -9,20 +9,18 @@ function StudyResumen() {
   const [patient, setPatient] = React.useState<Patient>();
 
   useEffect(() => {
-    setPatient(
-      new Patient({
-        id: "",
-        patientId: id,
-        name: "Jhon Doe",
-        email:
-          "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum vitae nisi delectus esse velit sit molestias non doloribus necessitatibus quasi error beatae laborum sapiente accusantium commodi odit, voluptatum ex minus!",
-        phoneNumber: "+123123",
-        birthDate: "12/12/21",
-        gender: "Male",
-        allergies: "",
-        medicalCondition: "",
-      })
-    );
+    const newPatient = new Patient({
+      id: "",
+      patientId: id,
+      name: "Jhon Doe",
+      email: "",
+      phoneNumber: "+123123",
+      birthDate: "12/12/21",
+      gender: Gender[0],
+      allergies: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum vitae nisi delectus esse velit sit molestias non doloribus necessitatibus quasi error beatae laborum sapiente accusantium commodi odit, voluptatum ex minus!",
+      medicalCondition: "Lorem, ipsum dolor sit amet consectetur adipisicing elit. Harum vitae nisi delectus esse velit sit molestias non doloribus necessitatibus quasi error beatae laborum sapiente accusantium commodi odit, voluptatum ex minus!",
+    })
+    setPatient(newPatient);
   }, []);
 
   return (
@@ -30,48 +28,53 @@ function StudyResumen() {
       <BackButton />
       <section className="mx-6 mb-6">
         <h3 className="font-bold text-4xl">Resumen de estudio </h3>
+
         {patient && (
-          <section className="bg-primary rounded-3xl m-10 p-5 min-h-[400px] shadow-buttonShadow">
-            <div className="flex justify-between">
-              <h3 className="font-bold text-4x1 text-white text-4xl text-shadow">
+          <section className="bg-primary rounded-3xl my-10 mx-auto p-5 max-w-4xl shadow-buttonShadow">
+            <div className="flex justify-between items-center">
+              <h3 className="font-bold text-6xl text-white text-shadow">
                 {patient.name}
               </h3>
-              <label>12/12/22</label>
+              <div>
+              <label className="text-xl">Fecha de estudio: </label>
+                <label className="text-xl font-bold"> 12/12/22</label>
+              </div>
+              
             </div>
-            <div className="flex justify-around w-1/2 my-5">
-              <div className="bg-green w-28 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
+            <div className="flex justify-around items-center my-5 text-2xl">
+              <div className="bg-green w-fit min-w-[8rem] px-3 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
                 CT
               </div>
-              <div className="bg-orange w-28 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
-                1
+              <div className="bg-orange w-fit min-w-[8rem] px-3 mx-5 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
+                Proceso de pruebas
               </div>
-              <div className="bg-danger w-28 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
+              <div className="bg-danger w-fit min-w-[8rem] px-3 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
                 Urgente
               </div>
             </div>
 
             <div className="grid grid-cols-2">
               <div className="col-span-1">
-                <div className="text-base">
-                  <p className="text-lg">
+                <div className="text-3xl">
+                  <p>
                     <label className="font-semibold">
-                      {new Gender(patient.gender).getGender()}
+                      patient.gender
                     </label>
                   </p>
-                  <p className="text-lg">
+                  <p>
                     Fecha de nacimiento:{" "}
                     <label className="font-semibold">
                       {patient.birthDate?.toString()}
                     </label>
                   </p>
-                  <p className="text-lg">
+                  <p>
                     Edad: <label className="font-semibold">24</label>
                   </p>
-                  <p className="text-lg">
+                  <p>
                     Documento de identidad:{" "}
                     <label className="font-semibold">{patient.patientId}</label>
                   </p>
-                  <p className="text-lg">
+                  <p>
                     Número de telefono:{" "}
                     <label className="font-semibold">
                       {patient.phoneNumber}
@@ -79,7 +82,7 @@ function StudyResumen() {
                   </p>
                 </div>
               </div>
-              <div className="col-span-1">
+              <div className="col-span-1 ml-5">
                 <h6 className="font-semibold text-2xl">Alergias</h6>
                 <p>{patient.allergies ? patient.allergies : "Sin detalles"}</p>
                 <h6 className="font-semibold text-2xl">Condición médica</h6>
