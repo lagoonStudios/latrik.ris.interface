@@ -4,6 +4,7 @@ import './index.css';
 import './styles/global.css'
 
 import App from './App';
+import { HashRouter } from 'react-router-dom';
 // import reportWebVitals from './reportWebVitals';
 
 
@@ -13,7 +14,9 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <App />
+    <HashRouter>
+      <App />
+    </HashRouter>
   </React.StrictMode>
 );
 
