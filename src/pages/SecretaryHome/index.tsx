@@ -5,7 +5,7 @@ import Calendar from "assets/icons/Calendar.svg";
 import Settings from "assets/icons/Settings.svg";
 import Stats from "assets/icons/Stats.svg";
 
-export function SecretaryResumen() {
+export function SecretaryHome() {
   return (
     <div>
       <div className="bg-secondary w-full h-1/3 -z-10 fixed">
@@ -20,7 +20,7 @@ export function SecretaryResumen() {
         </div>
 
         <div className="flex justify-evenly mx-28 border-b pb-14">
-          <Link to="/RegisterPatient">
+          <Link to="/PatientList">
             <button
               className="w-96 h-80 filledPrimary p-4 text-center rounded-3xl"
               type="button"

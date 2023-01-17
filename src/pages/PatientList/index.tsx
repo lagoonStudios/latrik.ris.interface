@@ -1,44 +1,38 @@
 import { BackButton } from "components/BackButton";
 import React from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { Column, Row, useTable } from "react-table";
+import { Patient } from "models/latrikModels";
+import { getPatients } from "api/patientsApi";
 
 function PatientList() {
-  const data = React.useMemo(
-    () => [
-      {
-        id: "123123asd",
-        name: "Jhon Doe",
-        gender: "Hombre",
-        birthDate: '30-12-22'
+  const navigate = useNavigate();
+  const [patients, setPatients] = React.useState<Patient[]>([]);
+
+  React.useEffect(() => {
+    getPatients().then(
+      (res) => {
+        setPatients(res.data._embedded.patientList);
+        console.log(res);
       },
-      {
-        id: "8879651",
-        name: "Maria",
-        gender: "Mujer",
-        birthDate: '30-12-22'
-      },
-      {
-        id: "5624752",
-        name: "Jhon Doe",
-        gender: "Hombre",
-        birthDate: '30-12-22'
-      },
-      {
-        id: "4149871",
-        name: "Maria",
-        gender: "Mujer",
-        birthDate: '30-12-22'
-      },
-    ],
-    []
-  );
+      (err) => {
+        console.log(err);
+      }
+    );
+  }, []);
+
+  const data = React.useMemo(() => patients, [patients]);
 
   const columns: Column[] = React.useMemo(() => {
     return [
       {
+        Header: "id",
+        accessor: "id",
+        show: false,
+      },
+      {
         Header: "Doc. de identidad",
-        accessor: "id", // accessor is the "key" in the data
+        accessor: "patientId", // accessor is the "key" in the data
       },
       {
         Header: "Nombre",
@@ -63,18 +57,25 @@ function PatientList() {
         Header: "Acción",
         Cell: ({ row }: { row: Row }) => {
           return (
-            <Link to={`/StudyResumen/${row.values.col1}/`}>
-              <button className="underline text-blue font-bold" type="button">
-                Crear estudio
-              </button>
-            </Link>
+            <button
+              onClick={() => navigate("/StudyForm/", {
+                state: { patientId: row.values.id },
+              })}
+              className="underline text-blue font-bold"
+              type="button"
+            >
+              Crear estudio
+            </button>
           );
         },
       },
     ]);
   };
 
-  const tableInstance = useTable({ columns, data }, tableHooks);
+  const tableInstance = useTable(
+    { columns, data, initialState: { hiddenColumns: ["id"] } },
+    tableHooks
+  );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     tableInstance;
@@ -84,9 +85,11 @@ function PatientList() {
       <BackButton />
       <div className="mx-6 mb-6 flex justify-between">
         <h3 className="font-bold text-4xl">Lista de Pacientes</h3>
-        <button className="filledTertiary rounded-xl w-44 h-12" type="button">
-          Registrar paciente
-        </button>
+        <Link to={"/PatientForm"}>
+          <button className="filledTertiary rounded-xl w-44 h-12" type="button">
+            Registrar paciente
+          </button>
+        </Link>
       </div>
 
       <div className="m-10">

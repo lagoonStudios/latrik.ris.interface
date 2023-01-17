@@ -1,8 +1,8 @@
 import React from "react";
 import { Patient, Study } from '../../models/latrikModels';
 import { BackButton } from "../../components/BackButton/index";
-import PatientForm from "components/PatientForm";
-import StudyForm from "components/StudyForm";
+import PatientForm from "pages/PatientForm";
+import StudyForm from "pages/StudyForm";
 import Loader from "components/Loader";
 import ConfirmModal from "pages/RegisterPatient/ConfirmModal";
 import SuccessModal from "./SuccessModal";
@@ -10,8 +10,8 @@ import SuccessModal from "./SuccessModal";
 export default function RegisterPatient() {
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [step, setStep] = React.useState<number>(1);
-  const [patient, setPatient] = React.useState<Patient>(new Patient({}));
-  const [study, setStudy] = React.useState<Study>();
+  const [patient, setPatient] = React.useState<Patient | null>(null);
+  const [study, setStudy] = React.useState<Study | null>(null);
   const [isOpenConfirmModal, setisOpenConfirmModal] = React.useState(false);
   const [isOpenSuccessModal, setisOpenSuccessModal] = React.useState(false);
 
@@ -32,15 +32,15 @@ export default function RegisterPatient() {
   };
 
   const createNewStudy = () => {
-    setPatient(new Patient({}))
-    setStudy(new Study({}));
+    setPatient(null)
+    setStudy(null);
     closeModals();
     setStep(1);
   };
 
   return (
     <>
-      <BackButton />
+      {/* <BackButton />
       <div className="flex">
         <div className="flex-auto px-10 pb-10">
           {step === 1 && (
@@ -55,7 +55,7 @@ export default function RegisterPatient() {
               setStudy={setStudy}
               setStep={setStep}
               setisOpenConfirmModal={setisOpenConfirmModal}
-              patientId={patient.patientId}
+              patientId={patient?.id}
             />
           )}
         </div>
@@ -67,7 +67,7 @@ export default function RegisterPatient() {
         />
       )}
       {isOpenSuccessModal && <SuccessModal createNewStudy={createNewStudy} />}
-      <Loader isLoading={isLoading} />
+      <Loader isLoading={isLoading} /> */}
     </>
   );
 }

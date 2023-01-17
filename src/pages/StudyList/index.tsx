@@ -7,42 +7,23 @@ import {
   Status,
   StudyPriority,
 } from "../../models/latrikModels";
+import { getStudies } from "api/studiesApi";
 
 function StudyList() {
+  const [studies, setStudies] = React.useState([])
+
+  React.useEffect(() => {
+    getStudies().then((res) => {
+      console.log('res: ', res)
+      setStudies(res.data._embedded.studyList)
+    }, (err) => {
+      console.log(err)
+    })
+  }, [])
+
   const data = React.useMemo(
-    () => [
-      {
-        id: "12317asndkj",
-        name: "Jhon Doe",
-        patientId: "1239712",
-        studyDate: "12/12/22",
-        modality: Modality[0],
-        process: 'Proceso1',
-        status: Status[1],
-        priority: StudyPriority[2],
-      },
-      {
-        id: "12317asndkj",
-        name: "Jhon Doe",
-        patientId: "1239712",
-        studyDate: "12/12/22",
-        modality: Modality[0],
-        process: 'Proceso1',
-        status: Status[1],
-        priority: StudyPriority[2],
-      },
-      {
-        id: "12317asndkj",
-        name: "Jhon Doe",
-        patientId: "1239712",
-        studyDate: "12/12/22",
-        modality: Modality[0],
-        process: 'Proceso1',
-        status: Status[1],
-        priority: StudyPriority[2],
-      },
-    ],
-    []
+    () => studies,
+    [studies]
   );
 
   const columns: Column[] = React.useMemo(() => {
@@ -54,11 +35,11 @@ function StudyList() {
       },
       {
         Header: "Nombre",
-        accessor: "name",
+        accessor: "patient.name",
       },
       {
         Header: "Doc de identidad",
-        accessor: "patientId",
+        accessor: "patient.patientId",
       },
       {
         Header: "Fecha del estudio",
