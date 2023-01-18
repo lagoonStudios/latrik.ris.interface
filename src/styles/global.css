@@ -14,25 +14,43 @@ select {
 }
 
 img {
-  @apply m-auto text-center
+  @apply m-auto text-center;
 }
 
-button.filledPrimary {
+/* table thead tr:first-child th:first-child {
+  @apply border-tertiary rounded-tl-[10px];
+}
+table thead tr:first-child th:last-child {
+  @apply border-tertiary rounded-tr-[10px];
+}
+
+table tbody tr:last-child td:first-child {
+  @apply border-tertiary rounded-tl-[10px];
+}
+table tbody tr:last-child td:last-child {
+  @apply border-tertiary rounded-tr-[10px];
+} */
+
+.filledPrimary {
   @apply bg-primary shadow-buttonShadow font-bold;
 }
 
-button.filledTertiary {
-  @apply bg-tertiary shadow-buttonShadow font-bold text-white text-center;
+.filledTertiary {
+  @apply bg-tertiary shadow-buttonShadow font-bold text-black text-center;
 }
 
 .modal {
   @apply z-10 fixed top-0 left-0 backdrop-blur-[0.7px] w-full h-full bg-opacity-40 bg-white flex justify-around items-center text-center;
 }
 
-.modalContainer{
-  @apply grid items-center shadow-buttonShadow
+.modalContainer {
+  @apply grid items-center shadow-buttonShadow bg-primary bg-opacity-95 p-10 rounded-xl;
 }
 
-.text-shadow{
+.text-shadow {
   text-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.svg120{
+  @apply h-[30vw] max-h-[120px] m-auto
 }

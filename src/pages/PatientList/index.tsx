@@ -4,19 +4,24 @@ import { Link, useNavigate } from "react-router-dom";
 import { Column, Row, useTable } from "react-table";
 import { Patient } from "models/latrikModels";
 import { getPatients } from "api/patientsApi";
+import Loader from "components/Loader";
 
 function PatientList() {
   const navigate = useNavigate();
   const [patients, setPatients] = React.useState<Patient[]>([]);
+  const [isLoading, setIsloading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
+    setIsloading(true);
     getPatients().then(
       (res) => {
         setPatients(res.data._embedded.patientList);
         console.log(res);
+        setIsloading(false);
       },
       (err) => {
         console.log(err);
+        setIsloading(false);
       }
     );
   }, []);
@@ -58,13 +63,15 @@ function PatientList() {
         Cell: ({ row }: { row: Row }) => {
           return (
             <button
-              onClick={() => navigate("/StudyForm/", {
-                state: { patientId: row.values.id },
-              })}
-              className="underline text-blue font-bold"
+              onClick={() =>
+                navigate("/StudyForm/", {
+                  state: { patientId: row.values.id },
+                })
+              }
+              className="underline text-primary font-bold"
               type="button"
             >
-              Crear estudio
+              Realizar estudio
             </button>
           );
         },
@@ -93,21 +100,21 @@ function PatientList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full rounded-lg">
+        <table {...getTableProps()} className="w-full">
           <thead className="h-8">
             {
               // Loop over the header rows
               headerGroups.map((headerGroup) => (
                 // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()}>
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  className="bg-tertiary"
+                >
                   {
                     // Loop over the headers in each row
                     headerGroup.headers.map((column) => (
                       // Apply the header cell props
-                      <th
-                        {...column.getHeaderProps()}
-                        className="border border-lightGrey p-3"
-                      >
+                      <th {...column.getHeaderProps()} className="p-3">
                         {
                           // Render the header
                           column.render("Header")
@@ -127,7 +134,10 @@ function PatientList() {
                 prepareRow(row);
                 return (
                   // Apply the row props
-                  <tr {...row.getRowProps()}>
+                  <tr
+                    {...row.getRowProps()}
+                    className="hover:shadow-tableRowShadow"
+                  >
                     {
                       // Loop over the rows cells
                       row.cells.map((cell) => {
@@ -135,7 +145,7 @@ function PatientList() {
                         return (
                           <td
                             {...cell.getCellProps()}
-                            className="px-5 border border-lightGrey p-3"
+                            className="px-5 border border-tertiary p-3"
                           >
                             {
                               // Render the cell contents
@@ -152,6 +162,7 @@ function PatientList() {
           </tbody>
         </table>
       </div>
+      <Loader isLoading={isLoading} />
     </>
   );
 }

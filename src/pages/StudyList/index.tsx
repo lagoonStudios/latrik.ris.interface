@@ -2,11 +2,6 @@ import React from "react";
 import { BackButton } from "components/BackButton";
 import { Column, Row, useTable } from "react-table";
 import { Link } from "react-router-dom";
-import {
-  Modality,
-  Status,
-  StudyPriority,
-} from "../../models/latrikModels";
 import { getStudies } from "api/studiesApi";
 
 function StudyList() {
@@ -99,20 +94,20 @@ function StudyList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full rounded-lg">
+        <table {...getTableProps()} className="w-full rounded-lg m-auto">
           <thead>
             {
               // Loop over the header rows
               headerGroups.map((headerGroup) => (
                 // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()}>
+                <tr {...headerGroup.getHeaderGroupProps()} className="bg-tertiary">
                   {
                     // Loop over the headers in each row
                     headerGroup.headers.map((column) => (
                       // Apply the header cell props
                       <th
                         {...column.getHeaderProps()}
-                        className="border border-lightGrey p-3"
+                        className="p-3"
                       >
                         {
                           // Render the header
@@ -133,7 +128,7 @@ function StudyList() {
                 prepareRow(row);
                 return (
                   // Apply the row props
-                  <tr {...row.getRowProps()}>
+                  <tr {...row.getRowProps()} className="hover:shadow-tableRowShadow">
                     {
                       // Loop over the rows cells
                       row.cells.map((cell) => {
@@ -141,7 +136,7 @@ function StudyList() {
                         return (
                           <td
                             {...cell.getCellProps()}
-                            className="px-5 border border-lightGrey p-3"
+                            className="px-5 border border-tertiary p-3"
                           >
                             {
                               // Render the cell contents

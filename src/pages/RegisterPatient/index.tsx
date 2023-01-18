@@ -42,7 +42,7 @@ export default function RegisterPatient() {
     <>
       {/* <BackButton />
       <div className="flex">
-        <div className="flex-auto px-10 pb-10">
+        <div className="}">
           {step === 1 && (
             <PatientForm
               setPatient={setPatient}

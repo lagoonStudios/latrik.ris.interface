@@ -3,14 +3,21 @@ import { Modality, Patient, Study, StudyPriority } from "models/latrikModels";
 import * as Yup from "yup";
 import React, { useCallback, useEffect } from "react";
 import { getPatientById } from "api/patientsApi";
-import { useLocation } from "react-router";
+import { useLocation, useNavigate } from "react-router";
+import { BackButton } from "components/BackButton";
+import { addStudy } from "../../api/studiesApi";
+import Loader from "components/Loader";
+import StudyConfirmationModal from "./StudyConfirmationModal";
 
 function StudyForm() {
+  const navigate = useNavigate();
   const { state } = useLocation();
   const { patientId } = state;
 
   const [patient, setPatient] = React.useState<Patient>();
   const [study, setStudy] = React.useState<Study>();
+  const [isLoading, setIsLoading] = React.useState<boolean>(false);
+  const [showConfirmationModal, setShowConfirmationModal] = React.useState<boolean>(false)
 
   const [modalities, setModalities] = React.useState<
     { value: number; label: string }[]
@@ -22,14 +29,17 @@ function StudyForm() {
   const today: string = new Date().toISOString().split("T")[0];
 
   useEffect(() => {
+    setIsLoading(true);
     if (patientId)
       getPatientById(patientId).then(
         (res) => {
           console.log("patientRes: ", res);
           setPatient(res.data);
+          setIsLoading(false);
         },
         (err) => {
           console.log("patientErr: ", err);
+          setIsLoading(false);
         }
       );
 
@@ -72,6 +82,7 @@ function StudyForm() {
   );
   return (
     <>
+      <BackButton />
       {patient && (
         <Formik
           initialValues={{
@@ -81,16 +92,24 @@ function StudyForm() {
             referringPhysician: "",
             patient: patient,
             studyDate: today,
-            modality: "",
+            modality: "0",
             procedure: "",
             status: "",
-            priority: "",
+            priority: "0",
           }}
           onSubmit={(values: Study, { setSubmitting }) => {
-            //TODO conectar back para crear estudio
-            console.log("validando: ", values);
-            setStudy(values);
-            setSubmitting(false);
+            addStudy(values).then(
+              (res) => {
+                console.log("res: ", res);
+                console.log("validando: ", values);
+                setStudy(values);
+                setSubmitting(false);
+                setShowConfirmationModal(true);
+              },
+              (err) => {
+                console.log("err: ", err);
+              }
+            );
           }}
           validationSchema={Yup.object({
             studyDate: Yup.date().required("Requerido"),
@@ -102,7 +121,7 @@ function StudyForm() {
           })}
         >
           {({ isValid }) => (
-            <Form className="bg-white container py-10 px-28 rounded-3xl border-primary border">
+            <Form className="bg-white container py-10 px-28 rounded-3xl border-primary border m-auto mt-8">
               {/* <FormContext setClearForm={undefined} clearForm={false} /> */}
 
               <h1 className="text-center text-black text-4xl font-bold mb-5">
@@ -164,7 +183,7 @@ function StudyForm() {
                 <button
                   type="button"
                   className="filledTertiary rounded-xl w-44 h-12"
-                  // onClick={() => setStep(1)}
+                  onClick={() => navigate(-1)}
                 >
                   Volver
                 </button>
@@ -180,6 +199,8 @@ function StudyForm() {
           )}
         </Formik>
       )}
+      {showConfirmationModal && <StudyConfirmationModal setShowConfirmationModal={setShowConfirmationModal} />}
+      <Loader isLoading={isLoading} />
     </>
   );
 }
