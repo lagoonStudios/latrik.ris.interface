@@ -32,9 +32,6 @@ function PatientForm() {
       false
     );
   };
-  const resetFormBtn = () => {
-    document.getElementById('resetFormBtn')?.click();
-  }
 
   return (
     <>

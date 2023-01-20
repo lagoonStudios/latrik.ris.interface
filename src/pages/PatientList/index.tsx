@@ -68,7 +68,7 @@ function PatientList() {
                   state: { patientId: row.values.id },
                 })
               }
-              className="underline text-primary font-bold"
+              className="underline text-tertiary font-bold"
               type="button"
             >
               Realizar estudio
@@ -162,7 +162,6 @@ function PatientList() {
           </tbody>
         </table>
       </div>
-      <Loader isLoading={isLoading} />
     </>
   );
 }
