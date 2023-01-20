@@ -5,7 +5,7 @@ import StudyList from "pages/StudyList";
 import PatientList from "pages/PatientList";
 import StudyResumen from "pages/StudyDetail";
 import PatientForm from 'pages/PatientForm';
-import StudyForm from 'pages/StudyForm';
+import RegisterStudy from 'pages/RegisterStudy';
 
 function App() {
   return (
@@ -14,7 +14,7 @@ function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<SecretaryHome />} />
           <Route path="PatientForm" element={<PatientForm />} />
-          <Route path="StudyForm" element={<StudyForm />} />
+          <Route path="RegisterStudy" element={<RegisterStudy />} />
           <Route path="StudyList" element={<StudyList />} />
           <Route path="PatientList" element={<PatientList />} />
           <Route path="StudyResumen/:id" element={<StudyResumen />} />

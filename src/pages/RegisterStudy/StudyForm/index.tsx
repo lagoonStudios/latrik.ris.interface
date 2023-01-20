@@ -1,23 +1,13 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Modality, Patient, Study, StudyPriority } from "models/latrikModels";
-import * as Yup from "yup";
-import React, { useCallback, useEffect } from "react";
-import { getPatientById } from "api/patientsApi";
-import { useLocation, useNavigate } from "react-router";
-import { BackButton } from "components/BackButton";
-import { addStudy } from "../../api/studiesApi";
-import Loader from "components/Loader";
-import StudyConfirmationModal from "./StudyConfirmationModal";
+import React from "react";
+import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { addStudy } from "api/studiesApi";
+import * as Yup from 'yup';
+import { useNavigate } from "react-router";
 
-function StudyForm() {
-  const navigate = useNavigate();
-  const { state } = useLocation();
-  const { patientId } = state;
-
-  const [patient, setPatient] = React.useState<Patient>();
-  const [study, setStudy] = React.useState<Study>();
-  const [isLoading, setIsLoading] = React.useState<boolean>(false);
-  const [showConfirmationModal, setShowConfirmationModal] = React.useState<boolean>(false)
+function StudyForm({ patient, setStudy }: { patient: Patient | undefined, setStudy: Function }) {
+    const navigate = useNavigate();
+  const today: string = new Date().toISOString().split("T")[0];
 
   const [modalities, setModalities] = React.useState<
     { value: number; label: string }[]
@@ -26,25 +16,7 @@ function StudyForm() {
     { value: number; label: string }[]
   >([]);
 
-  const today: string = new Date().toISOString().split("T")[0];
-
-  useEffect(() => {
-    setIsLoading(true);
-    if (patientId){
-      getPatientById(patientId).then(
-        (res) => {
-          console.log("patientRes: ", res);
-          setPatient(res.data);
-          setIsLoading(false);
-        },
-        (err) => {
-          console.log("patientErr: ", err);
-          setIsLoading(false);
-        }
-      );
-    }
-      
-
+  React.useEffect(() => {
     const rollModalities = () => {
       let modals: { value: number; label: string }[] = [];
       for (let i = 0; i < 18; i++) {
@@ -63,28 +35,24 @@ function StudyForm() {
 
     rollPriorities();
     rollModalities();
-  }, [patientId]);
+  }, [patient?.id]);
 
-  const traducePriority = useCallback(
-    (label: string) => {
-      switch (label) {
-        case StudyPriority[0]:
-          return "Baja";
-        case StudyPriority[1]:
-          return "Normal";
-        case StudyPriority[2]:
-          return "Urgente";
-        case StudyPriority[3]:
-          return "Emergencia";
-        default:
-          return "";
-      }
-    },
-    []
-  );
+  const traducePriority = React.useCallback((label: string) => {
+    switch (label) {
+      case StudyPriority[0]:
+        return "Baja";
+      case StudyPriority[1]:
+        return "Normal";
+      case StudyPriority[2]:
+        return "Urgente";
+      case StudyPriority[3]:
+        return "Emergencia";
+      default:
+        return "";
+    }
+  }, []);
   return (
-    <>
-      <BackButton goTo={'/StudyList'} />
+    <div>
       {patient && (
         <Formik
           initialValues={{
@@ -104,9 +72,9 @@ function StudyForm() {
               (res) => {
                 console.log("res: ", res);
                 console.log("validando: ", values);
-                setStudy(values);
+                // setStudy(values);
                 setSubmitting(false);
-                setShowConfirmationModal(true);
+                // setShowConfirmationModal(true);
               },
               (err) => {
                 console.log("err: ", err);
@@ -124,8 +92,6 @@ function StudyForm() {
         >
           {({ isValid }) => (
             <Form className="bg-white container py-10 px-28 rounded-3xl border-primary border m-auto mt-8">
-
-
               <h1 className="text-center text-black text-4xl font-bold mb-5">
                 Registro de Estudio
               </h1>
@@ -201,9 +167,7 @@ function StudyForm() {
           )}
         </Formik>
       )}
-      {showConfirmationModal && <StudyConfirmationModal setShowConfirmationModal={setShowConfirmationModal} />}
-      <Loader isLoading={isLoading} />
-    </>
+    </div>
   );
 }
 

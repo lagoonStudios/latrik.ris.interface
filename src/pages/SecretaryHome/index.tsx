@@ -65,7 +65,7 @@ export function SecretaryHome() {
             <SettingsSvg className="svg120 fill-white" />
             Configuración
           </button>
-          <Link to={"/StudyForm"}>
+          <Link to={"/RegisterStudy"}>
           <button
             className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
             type="button"

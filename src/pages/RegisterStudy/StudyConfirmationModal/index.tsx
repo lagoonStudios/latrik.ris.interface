@@ -22,7 +22,7 @@ function StudyConfirmationModal({
             <AddPersonSvg className="svg120 fill-primary" />
             <label className="font-bold text-2xl">Lista de pacientes</label>
           </button>
-          <button onClick={() => navigate("/StudyForm")}>
+          <button onClick={() => navigate("/RegisterStudy")}>
             <DocumentSvg className="svg120 fill-primary" />
             <label className="font-bold text-2xl">Asignar estudio</label>
           </button>

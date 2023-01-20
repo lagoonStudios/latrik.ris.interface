@@ -64,7 +64,7 @@ function PatientList() {
           return (
             <button
               onClick={() =>
-                navigate("/StudyForm/", {
+                navigate("/RegisterStudy/", {
                   state: { patientId: row.values.id },
                 })
               }
