@@ -88,7 +88,7 @@ function StudyList() {
 
   return (
     <>
-      <BackButton />
+      <BackButton goTo={'/'} />
       <div className="mx-6 mb-6">
         <h3 className="font-bold text-4xl">Lista de Estudios</h3>
       </div>
@@ -100,7 +100,7 @@ function StudyList() {
               // Loop over the header rows
               headerGroups.map((headerGroup) => (
                 // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()} className="bg-tertiary">
+                <tr {...headerGroup.getHeaderGroupProps()} className="bg-primary text-white">
                   {
                     // Loop over the headers in each row
                     headerGroup.headers.map((column) => (

@@ -1,6 +1,6 @@
-import { ReactComponent as Check } from "assets/icons/Check.svg";
-import { ReactComponent as AddPerson } from "assets/icons/AddPerson.svg";
-import { ReactComponent as ListCheck } from "assets/icons/ListCheck.svg";
+import { ReactComponent as CheckSvg } from "assets/icons/Check.svg";
+import { ReactComponent as AddPersonSvg } from "assets/icons/AddPerson.svg";
+import { ReactComponent as DocumentSvg } from "assets/icons/Document.svg";
 import { useNavigate } from "react-router";
 
 function StudyConfirmationModal({
@@ -12,19 +12,19 @@ function StudyConfirmationModal({
 
   return (
     <div className="modal">
-      <div className="modalContainer">
-        <Check className="svg120 fill-tertiary" />
+      <div className="modalContainer w-1/3">
+        <CheckSvg className="svg120 fill-success" />
         <h3 className="block font-bold text-4xl">
           Estudio creado correctamente
         </h3>
         <div className="flex justify-around mt-10">
-          <button onClick={()=>setShowConfirmationModal(false)}>
-            <AddPerson className="svg120 fill-tertiary" />
-            <label className="font-bold text-2xl">Nuevo estudio</label>
+          <button onClick={()=>navigate('/PatientList')}>
+            <AddPersonSvg className="svg120 fill-primary" />
+            <label className="font-bold text-2xl">Lista de pacientes</label>
           </button>
-          <button onClick={() => navigate("/StudyList")}>
-            <ListCheck className="svg120 fill-tertiary" />
-            <label className="font-bold text-2xl">Lista de estudios</label>
+          <button onClick={() => navigate("/StudyForm")}>
+            <DocumentSvg className="svg120 fill-primary" />
+            <label className="font-bold text-2xl">Asignar estudio</label>
           </button>
           {/* </Link> */}
         </div>

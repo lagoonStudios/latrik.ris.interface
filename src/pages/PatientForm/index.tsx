@@ -6,8 +6,10 @@ import React from "react";
 import { BackButton } from "components/BackButton";
 import Loader from "components/Loader";
 import PatientConfirmationModal from "./PatientConfirmationModal";
+import { useNavigate } from 'react-router';
 
 function PatientForm() {
+  const navigate = useNavigate()
   const today: string = new Date().toISOString().split("T")[0];
   const [patient, setPatient] = React.useState<Patient>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
@@ -36,7 +38,7 @@ function PatientForm() {
 
   return (
     <>
-      <BackButton />
+      <BackButton goTo={'/PatientList'} />
       <Formik
         initialValues={{
           id: "",
@@ -74,47 +76,45 @@ function PatientForm() {
           name: Yup.string().required("Requerido"),
           email: Yup.string().email("Email inválido").required("Requerido"),
           gender: Yup.string().required("Requerido"),
-          phone: Yup.string(),
+          phoneNumber: Yup.string().max(15, 'Máximo 15 caracteres'),
           birthDate: Yup.date()
             .max(today, "Fecha inválida")
             .required("Requerido"),
-          allergies: Yup.string(),
-          medicalCondition: Yup.string(),
+          allergies: Yup.string().max(30, 'Máximo 30 caracteres'),
+          medicalCondition: Yup.string().max(30, 'Máximo 30 caracteres'),
         })}
       >
         {({ isValid, setValues }) => (
           <Form
-            className="bg-white container py-10 px-28 rounded-3xl border-primary border m-auto mt-8"
             noValidate
           >
-            <h1 className="text-center text-black text-4xl font-bold mb-5">
+            <div className="bg-white w-full max-w-xl py-10 px-14 rounded-3xl border-primary border-[3px] m-auto">
+            <h1 className="text-center text-black text-4xl font-extrabold mb-5">
               Registro de paciente
             </h1>
-
-            <label htmlFor="name">Documento de identidad</label>
-            <Field
-              id="patientId"
-              name="patientId"
-              type="string"
-              className="w-full invalid invalid:border-b-danger"
-            />
-            <p className="block mb-3 text-danger">
-              <ErrorMessage name="patientId" />
-            </p>
 
             <label htmlFor="name">Nombre</label>
             <Field
               id="name"
               name="name"
               type="text"
-              className="w-full invalid:border-b-danger"
             />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="name" />
             </p>
 
+            <label htmlFor="name">Documento de identidad</label>
+            <Field
+              id="patientId"
+              name="patientId"
+              type="string"
+            />
+            <p className="block mb-3 text-danger">
+              <ErrorMessage name="patientId" />
+            </p>
+
             <label htmlFor="email">Email</label>
-            <Field id="email" name="email" type="email" className="w-full" />
+            <Field id="email" name="email" type="email" />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="email" />
             </p>
@@ -125,14 +125,13 @@ function PatientForm() {
               name="birthDate"
               type="date"
               max={today}
-              className="w-full"
             />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="birthDate" />
             </p>
 
             <label htmlFor="gender">Género</label>
-            <Field id="gender" name="gender" as="select" className="w-full">
+            <Field id="gender" name="gender" as="select">
               <option value="0">Male</option>
               <option value="1">Female</option>
               <option value="2">Other</option>
@@ -147,7 +146,6 @@ function PatientForm() {
               id="phoneNumber"
               name="phoneNumber"
               type="string"
-              className="w-full"
             />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="phoneNumber" />
@@ -157,8 +155,6 @@ function PatientForm() {
             <Field
               id="allergies"
               name="allergies"
-              as="textarea"
-              className="w-full"
             />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="allergies" />
@@ -168,27 +164,34 @@ function PatientForm() {
             <Field
               id="medicalCondition"
               name="medicalCondition"
-              as="textarea"
-              className="w-full"
             />
             <p className="block mb-3 text-danger">
               <ErrorMessage name="medicalCondition" />
             </p>
-
-            <div className="flex justify-around mt-20">
+          </div>
+            <div className="flex justify-around mt-10 w-4/6 mx-auto">
+            <button
+                type="button"
+                onClick={() => {
+                  navigate('/')
+                }}
+                className="outlineDanger rounded-xl w-44 h-12"
+              >
+                Cancelar
+              </button>
               <button
                 type="button"
                 onClick={() => {
                   resetForm(setValues);
                 }}
-                className="filledTertiary rounded-xl w-44 h-12"
+                className="outlinePrimary rounded-xl w-44 h-12"
                 id="resetFormBtn"
               >
                 Limpiar
               </button>
               <button
                 type="submit"
-                className="filledTertiary rounded-xl w-44 h-12 disabled:opacity-50"
+                className="filledPrimary rounded-xl w-44 h-12 disabled:opacity-50"
                 disabled={!isValid}
               >
                 Continuar
@@ -197,11 +200,9 @@ function PatientForm() {
           </Form>
         )}
       </Formik>
-      {showConfirmation && patient && (
+      {(showConfirmation && patient) && (
         <PatientConfirmationModal
           patientId={patient.id}
-          setShowConfirmation={setShowConfirmation}
-          resetFormBtn={resetFormBtn}
         />
       )}
       <Loader isLoading={isLoading} />

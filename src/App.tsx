@@ -3,7 +3,7 @@ import { SecretaryHome } from "./pages/SecretaryHome/index";
 import Layout from "pages/Layout";
 import StudyList from "pages/StudyList";
 import PatientList from "pages/PatientList";
-import StudyResumen from "pages/StudyResumen";
+import StudyResumen from "pages/StudyDetail";
 import PatientForm from 'pages/PatientForm';
 import StudyForm from 'pages/StudyForm';
 

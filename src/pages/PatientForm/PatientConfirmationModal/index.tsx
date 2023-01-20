@@ -1,35 +1,22 @@
-import { ReactComponent as Check } from "assets/icons/Check.svg";
-import { ReactComponent as AddPerson } from "assets/icons/AddPerson.svg";
-import { ReactComponent as Document } from "assets/icons/Document.svg";
+import { ReactComponent as CheckSvg } from "assets/icons/Check.svg";
+import { ReactComponent as AddPersonSvg } from "assets/icons/AddPerson.svg";
+import { ReactComponent as DocumentSvg } from "assets/icons/Document.svg";
 import { useNavigate } from "react-router";
 
-function PatientConfirmationModal({
-  patientId,
-  setShowConfirmation,
-  resetFormBtn,
-}: {
-  patientId: string;
-  setShowConfirmation: Function;
-  resetFormBtn: Function;
-}) {
+function PatientConfirmationModal({ patientId }: { patientId: string }) {
   const navigate = useNavigate();
-  const createNewPatient = () => {
-    console.log("Reset form");
-    resetFormBtn();
-    setShowConfirmation(false);
-  };
 
   return (
     <div className="modal">
       <div className="modalContainer">
         <div className="mb-5">
-          <Check className="svg120 fill-tertiary" />
+          <CheckSvg className="svg195 fill-success" />
           <h4 className="text-3xl font-bold">Paciente creado correctamente</h4>
         </div>
-        <div className="flex justify-around">
-          <button onClick={() => createNewPatient()}>
-            <AddPerson className="svg120 fill-tertiary" />
-            <h4 className="text-2xl font-bold">Nuevo paciente</h4>
+        <div className="flex justify-around mt-5">
+          <button onClick={() => navigate("/PatientList")}>
+            <AddPersonSvg className="svg120 fill-primary" />
+            <h4 className="text-2xl font-bold">Lista de pacientes</h4>
           </button>
           <button
             onClick={() =>
@@ -38,7 +25,7 @@ function PatientConfirmationModal({
               })
             }
           >
-            <Document className="svg120 fill-tertiary" />
+            <DocumentSvg className="svg120 fill-primary" />
             <h4 className="text-2xl font-bold">Asignar estudio</h4>
           </button>
         </div>

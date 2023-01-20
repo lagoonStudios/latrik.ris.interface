@@ -89,11 +89,11 @@ function PatientList() {
 
   return (
     <>
-      <BackButton />
+      <BackButton goTo={'/'} />
       <div className="mx-6 mb-6 flex justify-between">
         <h3 className="font-bold text-4xl">Lista de Pacientes</h3>
         <Link to={"/PatientForm"}>
-          <button className="filledTertiary rounded-xl w-44 h-12" type="button">
+          <button className="filledPrimary rounded-xl w-44 h-12" type="button">
             Registrar paciente
           </button>
         </Link>
@@ -108,7 +108,7 @@ function PatientList() {
                 // Apply the header row props
                 <tr
                   {...headerGroup.getHeaderGroupProps()}
-                  className="bg-tertiary"
+                  className="bg-primary text-white"
                 >
                   {
                     // Loop over the headers in each row

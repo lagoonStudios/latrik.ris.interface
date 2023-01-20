@@ -30,7 +30,7 @@ function StudyForm() {
 
   useEffect(() => {
     setIsLoading(true);
-    if (patientId)
+    if (patientId){
       getPatientById(patientId).then(
         (res) => {
           console.log("patientRes: ", res);
@@ -42,6 +42,8 @@ function StudyForm() {
           setIsLoading(false);
         }
       );
+    }
+      
 
     const rollModalities = () => {
       let modals: { value: number; label: string }[] = [];
@@ -61,7 +63,7 @@ function StudyForm() {
 
     rollPriorities();
     rollModalities();
-  }, []);
+  }, [patientId]);
 
   const traducePriority = useCallback(
     (label: string) => {
@@ -78,11 +80,11 @@ function StudyForm() {
           return "";
       }
     },
-    [priorities]
+    []
   );
   return (
     <>
-      <BackButton />
+      <BackButton goTo={'/StudyList'} />
       {patient && (
         <Formik
           initialValues={{
@@ -122,7 +124,7 @@ function StudyForm() {
         >
           {({ isValid }) => (
             <Form className="bg-white container py-10 px-28 rounded-3xl border-primary border m-auto mt-8">
-              {/* <FormContext setClearForm={undefined} clearForm={false} /> */}
+
 
               <h1 className="text-center text-black text-4xl font-bold mb-5">
                 Registro de Estudio
@@ -182,14 +184,14 @@ function StudyForm() {
               <div className="flex justify-around mt-20">
                 <button
                   type="button"
-                  className="filledTertiary rounded-xl w-44 h-12"
+                  className="filledPrimary rounded-xl w-44 h-12"
                   onClick={() => navigate(-1)}
                 >
                   Volver
                 </button>
                 <button
                   type="submit"
-                  className="filledTertiary rounded-xl w-44 h-12 disabled:opacity-50"
+                  className="filledPrimary rounded-xl w-44 h-12 disabled:opacity-50"
                   disabled={!isValid}
                 >
                   Envíar

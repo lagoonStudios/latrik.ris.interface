@@ -14,7 +14,7 @@ function SuccessModal({ createNewStudy }: { createNewStudy: Function }) {
         <div className="flex justify-around mt-10">
           <button
             onClick={() => createNewStudy()}
-            className="filledTertiary rounded-full w-80 h-56 font-bold text-2xl"
+            className="filledPrimary rounded-full w-80 h-56 font-bold text-2xl"
             type="button"
           >
             <img
@@ -27,7 +27,7 @@ function SuccessModal({ createNewStudy }: { createNewStudy: Function }) {
           </button>
           <Link to="/StudyList">
             <button
-              className="filledTertiary rounded-full w-80 h-56 font-bold text-2xl"
+              className="filledPrimary rounded-full w-80 h-56 font-bold text-2xl"
               type="button"
             >
               <img

@@ -1,47 +1,46 @@
 import { Link } from "react-router-dom";
-import { ReactComponent as AddPerson } from "assets/icons/AddPerson.svg";
-import { ReactComponent as ListCheck } from "assets/icons/ListCheck.svg";
+import { ReactComponent as AddPersonSvg } from "assets/icons/AddPerson.svg";
+import { ReactComponent as ListCheckSvg } from "assets/icons/ListCheck.svg";
 import {ReactComponent as PeopleSvg } from "assets/icons/People.svg"
-import Calendar from "assets/icons/Calendar.svg";
 import {ReactComponent as SettingsSvg} from "assets/icons/Settings.svg";
 import {ReactComponent as StatsSvg} from "assets/icons/Stats.svg";
 
 export function SecretaryHome() {
   return (
     <div>
-      <div className="bg-secondary w-full h-1/3 -z-10 fixed">
-        {/* background azul clarito */}
+      <div className="bg-primary w-full h-1/3 -z-10 fixed top-0">
+        {/* background azul oscuro */}
       </div>
 
-      <div>
+      <div className="w-full">
         <div className="mb-5">
-          <p className="text-center text-4xl font-bold block">
+          <p className="text-center text-5xl text-white font-extrabold block">
             Bienvenido de nuevo!
           </p>
         </div>
 
         <div className="flex justify-evenly mx-28 border-b pb-14">
-          <Link to="/PatientForm">
+          <Link to="/PatientList">
             <button
-              className="w-96 h-80 filledPrimary p-4 text-center rounded-3xl"
+              className="filledSecondary p-8 m-4 md:px-24 md:py-20 text-center rounded-3xl"
               type="button"
               title="Crear Nuevo Eestudio"
             >
-              <AddPerson className="svg120 fill-white" />
+              <PeopleSvg className="svg195 fill-primary" />
             </button>
             <br />
             <h3 className="text-center text-2xl font-bold mt-9">
-              Crear Nuevo Estudio
+              Lista de pacientes
             </h3>
           </Link>
           <div>
             <Link to="/StudyList">
               <button
-                className="w-96 h-80 filledPrimary p-4 text-center rounded-3xl"
+                className="filledSecondary p-8 m-4 md:px-24 md:py-20 text-center rounded-3xl"
                 type="button"
                 title="Lista de Estudios"
               >
-                <ListCheck className="svg120 fill-white" />
+                <ListCheckSvg className="svg195 fill-primary" />
               </button>
               <h3 className="text-center text-2xl font-bold mt-9">
                 Lista de Estudios
@@ -57,27 +56,27 @@ export function SecretaryHome() {
             Accesos rápidos
           </p>
         </div>
-        <div className="flex justify-evenly">
+        <div className="flex flex-col items-center sm:flex-row sm:justify-evenly">
           <button
-            className="filledTertiary text-white w-64 h-fit p-4 rounded-3xl"
+            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
             type="button"
             title="Configuración"
           >
             <SettingsSvg className="svg120 fill-white" />
             Configuración
           </button>
-          <Link to={"/PatientList"}>
+          <Link to={"/StudyForm"}>
           <button
-            className="filledTertiary text-white w-64 h-fit p-4 rounded-3xl"
+            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
             type="button"
             title="Pacientes"
           >
-            <PeopleSvg className="svg120 fill-white" />
-            Pacientes
+            <AddPersonSvg className="svg120 fill-white" />            
+            Nuevo estudio
           </button>
           </Link>
           <button
-            className="filledTertiary text-white w-64 h-fit p-4 rounded-3xl"
+            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
             type="button"
             title="Estadísticas"
           >

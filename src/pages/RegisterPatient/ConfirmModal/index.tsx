@@ -10,13 +10,13 @@ function ConfirmModal({ setisOpenConfirmModal, submitInfo }: { setisOpenConfirmM
         </h3>
         <div className="flex justify-around">
           <button
-            className="filledTertiary rounded-xl w-44 h-9"
+            className="filledPrimary rounded-xl w-44 h-9"
             type="button"
             onClick={() => setisOpenConfirmModal(false)}
           >
             Volver
           </button>
-          <button onClick={() => submitInfo()} className="filledTertiary rounded-xl w-44 h-9" type="button">
+          <button onClick={() => submitInfo()} className="filledPrimary rounded-xl w-44 h-9" type="button">
             Envíar
           </button>
         </div>
