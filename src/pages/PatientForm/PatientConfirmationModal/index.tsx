@@ -20,7 +20,7 @@ function PatientConfirmationModal({ patientId }: { patientId: string }) {
           </button>
           <button
             onClick={() =>
-              navigate("/StudyForm/", {
+              navigate("/RegisterStudy/", {
                 state: { patientId },
               })
             }

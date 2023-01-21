@@ -27,6 +27,16 @@ function StudyPatientForm({
     return setDoc(doc(getFirestore(), "Patients", values.id), values);
   };
 
+  const updatePatient = async (values: Patient) => {
+    setPatient(values);
+    setDoc(doc(getFirestore(), "Patients", values.id), values).then(
+      (res) => {},
+      (err) => {
+        console.log('updatePatient err: ',err);
+      }
+    );
+  };
+
   const formRef = React.useRef<any>();
 
   const today: string = new Date().toISOString().split("T")[0];
@@ -51,7 +61,7 @@ function StudyPatientForm({
   };
 
   React.useEffect(() => {
-    if(patient) formRef.current.setValues(patient);
+    if (patient) formRef.current.setValues(patient);
   }, [patient]);
 
   return (
@@ -74,6 +84,7 @@ function StudyPatientForm({
         setSubmitting(true);
         setIsLoading(true);
         if (values.id !== undefined && values.id !== "") {
+          updatePatient(values);
           setSubmitting(false);
           setIsLoading(false);
         } else if (values.id === undefined || values.id === "") {
@@ -87,7 +98,7 @@ function StudyPatientForm({
             (err) => {
               setSubmitting(false);
               setIsLoading(false);
-              console.log("err", err);
+              console.log("addPatient err: ", err);
             }
           );
         }
