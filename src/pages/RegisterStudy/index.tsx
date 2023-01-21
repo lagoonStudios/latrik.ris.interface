@@ -6,6 +6,7 @@ import Loader from "components/Loader";
 import StudyConfirmationModal from "./StudyConfirmationModal";
 import StudyForm from "./StudyForm";
 import StudyPatientForm from "./StudyPatientForm";
+import { addStudy } from "api/studiesApi";
 
 function RegisterStudy() {
   // const { state } = useLocation();
@@ -15,8 +16,24 @@ function RegisterStudy() {
   const [study, setStudy] = React.useState<Study>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showConfirmationModal, setShowConfirmationModal] =
-    React.useState<boolean>(false);
+    React.useState<boolean>(true);
 
+  const createStudy = () => {
+    if (study) {
+      addStudy(study).then(
+        (res) => {
+          console.log("res: ", res);
+          setStudy(res.data);
+          setShowConfirmationModal(false);
+        },
+        (err) => {
+          console.log("err: ", err);
+        }
+      );
+    } else {
+      console.log("No hay estudio");
+    }
+  };
   // React.useEffect(() => {
   //   if (patientId) {
   //     getPatientById(patientId).then(
@@ -39,13 +56,22 @@ function RegisterStudy() {
         <h1 className="text-center text-black text-4xl font-bold mb-5">
           Registro de estudio
         </h1>
-        <StudyPatientForm patient={patient} setPatient={setPatient} setIsLoading={setIsLoading} />
-        <StudyForm patient={patient} setStudy={setStudy} />
+        <StudyPatientForm
+          patient={patient}
+          setPatient={setPatient}
+          setIsLoading={setIsLoading}
+        />
+        <StudyForm
+          patient={patient}
+          setStudy={setStudy}
+          setShowConfirmationModal={setShowConfirmationModal}
+        />
       </div>
 
       {showConfirmationModal && (
         <StudyConfirmationModal
           setShowConfirmationModal={setShowConfirmationModal}
+          createStudy={createStudy}
         />
       )}
       <Loader isLoading={isLoading} />

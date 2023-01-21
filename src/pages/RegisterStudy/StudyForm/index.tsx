@@ -1,16 +1,17 @@
 import { Modality, Patient, Study, StudyPriority } from "models/latrikModels";
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { addStudy } from "api/studiesApi";
 import * as Yup from "yup";
 import { useNavigate } from "react-router";
 
 function StudyForm({
   patient,
   setStudy,
+  setShowConfirmationModal,
 }: {
   patient: Patient | undefined;
   setStudy: Function;
+  setShowConfirmationModal: Function;
 }) {
   const navigate = useNavigate();
   const today: string = new Date().toISOString().split("T")[0];
@@ -75,18 +76,8 @@ function StudyForm({
         }}
         onSubmit={(values: any, { setSubmitting }) => {
           if (values.patient) {
-            addStudy(values).then(
-              (res) => {
-                console.log("res: ", res);
-                console.log("validando: ", values);
-                setStudy(values);
-                setSubmitting(false);
-                // setShowConfirmationModal(true);
-              },
-              (err) => {
-                console.log("err: ", err);
-              }
-            );
+            setShowConfirmationModal(true);
+            setStudy(values);
           }
         }}
         validationSchema={Yup.object({
@@ -95,7 +86,10 @@ function StudyForm({
           procedure: Yup.string()
             .max(30, "30 caracteres máximo")
             .required("Requerido"),
-          priority: Yup.number().required(),
+          priority: Yup.number().required("Requerido"),
+          referringPhysician: Yup.string()
+            .required("Requerido")
+            .max(30, "Máximo 30 caracteres"),
         })}
       >
         {({ setValues }) => (
@@ -104,7 +98,7 @@ function StudyForm({
 
             <fieldset
               disabled={patient?.id === undefined}
-              className="flex justify-around items-center"
+              className="flex justify-around"
             >
               <div className="w-[45%]">
                 <label htmlFor="name">Fecha del estudio</label>
@@ -134,8 +128,19 @@ function StudyForm({
                 <p className="block mb-3 text-danger">
                   <ErrorMessage name="modality" />
                 </p>
+
+                <label htmlFor="referringPhysician">Médico asignado</label>
+                <Field
+                  id="referringPhysician"
+                  name="referringPhysician"
+                  // as="select"
+                  className="w-full"
+                ></Field>
+                <p className="block mb-3 text-danger">
+                  <ErrorMessage name="referringPhysician" />
+                </p>
               </div>
-              <div className="w-[45%]">
+              <div className="w-[45%] h-full">
                 <label htmlFor="procedure">Proceso</label>
                 <Field id="procedure" name="procedure" className="w-full" />
                 <p className="block mb-3 text-danger">
@@ -161,22 +166,15 @@ function StudyForm({
               </div>
             </fieldset>
 
-            <div className="flex justify-evenly mt-10 mx-auto">
+            <div className="flex justify-evenly mt-5 mx-auto">
               <button
                 type="button"
                 className="outlineDanger rounded-xl w-44 h-12 text-2xl"
-                onClick={()=> navigate(-1)}
+                onClick={() => navigate(-1)}
               >
                 Cancelar
               </button>
-              {/* <button
-                type="button"
-                className="outlinePrimary rounded-xl w-44 h-12 text-2xl"
-                id="resetFormBtn"
-                disabled={patient?.id === undefined}
-              >
-                Limpiar
-              </button> */}
+
               <button
                 type="submit"
                 className="filledPrimary rounded-xl w-44 h-12 disabled:opacity-50 text-2xl"

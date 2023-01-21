@@ -1,5 +1,5 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
-import { Patient } from "models/latrikModels";
+import { Gender, Patient } from "models/latrikModels";
 import * as Yup from "yup";
 import { addPatient } from "api/patientsApi";
 
@@ -13,6 +13,26 @@ function StudyPatientForm({
   setIsLoading: Function;
 }) {
   const today: string = new Date().toISOString().split("T")[0];
+
+  const resetForm = (action: Function) => {
+    //Funcion setValues()
+    setTimeout(() => {
+      action(
+        {
+          patientId: "",
+          name: "",
+          email: "",
+          phoneNumber: "",
+          birthDate: "",
+          gender: Gender[0],
+          allergies: "",
+          medicalCondition: "",
+        },
+        false
+      );
+    }, 1);
+  };
+
   return (
     <Formik
       initialValues={{
@@ -64,7 +84,7 @@ function StudyPatientForm({
         medicalCondition: Yup.string().max(30, "Máximo 30 caracteres"),
       })}
     >
-      {({ isValid, setValues }) => (
+      {({ setValues }) => (
         <Form noValidate>
           <h4 className="text-black text-2xl font-extrabold mb-5">Paciente</h4>
           <div className="flex justify-around items-center">
@@ -124,39 +144,25 @@ function StudyPatientForm({
             <div className="w-[45%]">
               <fieldset disabled={patient?.id !== undefined}>
                 <label htmlFor="email">Email</label>
-                <Field
-                  id="email"
-                  name="email"
-                  type="email"
-                />
+                <Field id="email" name="email" type="email" />
                 <p className="block mb-3 text-danger">
                   <ErrorMessage name="email" />
                 </p>
 
                 <label htmlFor="phoneNumber">Número de telefono</label>
-                <Field
-                  id="phoneNumber"
-                  name="phoneNumber"
-                  type="string"
-                />
+                <Field id="phoneNumber" name="phoneNumber" type="string" />
                 <p className="block mb-3 text-danger">
                   <ErrorMessage name="phoneNumber" />
                 </p>
               </fieldset>
               <label htmlFor="allergies">Alergias</label>
-              <Field
-                id="allergies"
-                name="allergies"
-              />
+              <Field id="allergies" name="allergies" />
               <p className="block mb-3 text-danger">
                 <ErrorMessage name="allergies" />
               </p>
 
               <label htmlFor="medicalCondition">Condición médica</label>
-              <Field
-                id="medicalCondition"
-                name="medicalCondition"
-              />
+              <Field id="medicalCondition" name="medicalCondition" />
               <p className="block mb-3 text-danger">
                 <ErrorMessage name="medicalCondition" />
               </p>
@@ -170,6 +176,19 @@ function StudyPatientForm({
             >
               Actualizar
             </button>
+
+            <button
+              type="reset"
+              className="outlinePrimary rounded-xl w-44 h-12 text-2xl"
+              id="resetFormBtn"
+              disabled={patient?.id !== undefined}
+              onClick={() => {
+                resetForm(setValues);
+              }}
+            >
+              Limpiar
+            </button>
+
             <button
               type="submit"
               className="filledPrimary rounded-xl w-44 h-12 text-2xl"

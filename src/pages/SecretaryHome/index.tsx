@@ -3,7 +3,7 @@ import { ReactComponent as AddPersonSvg } from "assets/icons/AddPerson.svg";
 import { ReactComponent as ListCheckSvg } from "assets/icons/ListCheck.svg";
 import {ReactComponent as PeopleSvg } from "assets/icons/People.svg"
 import {ReactComponent as SettingsSvg} from "assets/icons/Settings.svg";
-import {ReactComponent as StatsSvg} from "assets/icons/Stats.svg";
+import {ReactComponent as DocumentSvg} from "assets/icons/Document.svg";
 
 export function SecretaryHome() {
   return (
@@ -29,7 +29,7 @@ export function SecretaryHome() {
               <PeopleSvg className="svg195 fill-primary" />
             </button>
             <br />
-            <h3 className="text-center text-2xl font-bold mt-9">
+            <h3 className="text-center text-4xl font-bold mt-9">
               Lista de pacientes
             </h3>
           </Link>
@@ -42,7 +42,7 @@ export function SecretaryHome() {
               >
                 <ListCheckSvg className="svg195 fill-primary" />
               </button>
-              <h3 className="text-center text-2xl font-bold mt-9">
+              <h3 className="text-center text-4xl font-bold mt-9">
                 Lista de Estudios
               </h3>
             </Link>
@@ -56,33 +56,36 @@ export function SecretaryHome() {
             Accesos rápidos
           </p>
         </div>
-        <div className="flex flex-col items-center sm:flex-row sm:justify-evenly">
+        <div className="flex flex-col items-center sm:flex-row sm:justify-center">
           <button
-            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
+            className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
             type="button"
             title="Configuración"
           >
-            <SettingsSvg className="svg120 fill-white" />
+            <SettingsSvg className="svg120 fill-white !mb-5" />
             Configuración
           </button>
-          <Link to={"/RegisterStudy"}>
+          <Link to={"/PatientForm"}>
           <button
-            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
+            className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
             type="button"
             title="Pacientes"
           >
-            <AddPersonSvg className="svg120 fill-white" />            
-            Nuevo estudio
+            <AddPersonSvg className="svg120 fill-white !mb-5" />            
+            Nuevo paciente
           </button>
           </Link>
+          <Link to={'RegisterStudy'}>
+          
           <button
-            className="filledPrimary py-4 px-8  mx-4 my-2 rounded-3xl max-w-[230px]"
+            className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
             type="button"
             title="Estadísticas"
           >
-            <StatsSvg className="svg120 fill-white" />
-            Estadísticas
+            <DocumentSvg className="svg120 fill-white !mb-5" />
+            Nuevo estudio
           </button>
+          </Link>
         </div>
       </div>
     </div>

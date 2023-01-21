@@ -18,19 +18,21 @@ function PatientForm() {
 
   const resetForm = (action: Function) => {
     //Funcion setValues()
-    action(
-      {
-        patientId: "",
-        name: "",
-        email: "",
-        phoneNumber: "",
-        birthDate: "",
-        gender: Gender[0],
-        allergies: "",
-        medicalCondition: "",
-      },
-      false
-    );
+    setTimeout(() => {
+      action(
+        {
+          patientId: "",
+          name: "",
+          email: "",
+          phoneNumber: "",
+          birthDate: "",
+          gender: Gender[0],
+          allergies: "",
+          medicalCondition: "",
+        },
+        false
+      );
+    }, 1);
   };
 
   return (
@@ -152,7 +154,7 @@ function PatientForm() {
                 Cancelar
               </button>
               <button
-                type="button"
+                type="reset"
                 onClick={() => {
                   resetForm(setValues);
                 }}
