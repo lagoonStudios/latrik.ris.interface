@@ -1,10 +1,10 @@
 export interface Study {
-  id:                 string;
-  patient:            Patient;
+  id?:                 string;
+  patient?:            Patient;
   studyDate:          string;
   modality:           string;
-  studyInstanceUID:   string;
-  pacsUID:            string;
+  studyInstanceUID?:   string;
+  pacsUID?:            string;
   referringPhysician: string;
   procedure:          string;
   status:             string;

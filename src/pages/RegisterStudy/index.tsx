@@ -6,47 +6,61 @@ import Loader from "components/Loader";
 import StudyConfirmationModal from "./StudyConfirmationModal";
 import StudyForm from "./StudyForm";
 import StudyPatientForm from "./StudyPatientForm";
-import { addStudy } from "api/studiesApi";
+import { useLocation } from "react-router";
+import { useFirestoreDocDataOnce } from "reactfire";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getFirestore,
+} from "firebase/firestore";
 
 function RegisterStudy() {
-  // const { state } = useLocation();
-  // const { patientId } = state;
+  const { state } = useLocation();
+  const { patientId } = state;
+
+  const docRef = doc(getFirestore(), "Patients", patientId);
+  const patientRef: any = useFirestoreDocDataOnce(docRef);
+
 
   const [patient, setPatient] = React.useState<Patient>();
   const [study, setStudy] = React.useState<Study>();
   const [isLoading, setIsLoading] = React.useState<boolean>(false);
   const [showConfirmationModal, setShowConfirmationModal] =
-    React.useState<boolean>(true);
+    React.useState<boolean>(false);
 
-  const createStudy = () => {
-    if (study) {
-      addStudy(study).then(
-        (res) => {
-          console.log("res: ", res);
-          setStudy(res.data);
-          setShowConfirmationModal(false);
-        },
-        (err) => {
-          console.log("err: ", err);
-        }
-      );
-    } else {
-      console.log("No hay estudio");
+  const createStudy = (values: Study) => {
+    if (study && study.patient) {
+
+      const studiesRef = collection(getFirestore(), "Studies");
+      const addStudy = async (values: Study) => {
+        const snap = await addDoc(studiesRef, values);
+        values.id = snap.id;
+        setStudy(values);
+        return setDoc(doc(getFirestore(), "Studies", values.id), values);
+      };
+      addStudy(values);
+    //   addStudy(study).then(
+    //     (res) => {
+    //       console.log("res: ", res);
+    //       setStudy(res.data);
+    //       setShowConfirmationModal(false);
+    //     },
+    //     (err) => {
+    //       console.log("err: ", err);
+    //     }
+    //   );
+    // } else {
+    //   console.log("No hay estudio");
     }
   };
-  // React.useEffect(() => {
-  //   if (patientId) {
-  //     getPatientById(patientId).then(
-  //       (res) => {
-  //         console.log("patientRes: ", res);
-  //         setPatient(res.data);
-  //       },
-  //       (err) => {
-  //         console.log("patientErr: ", err);
-  //       }
-  //     );
-  //   }
-  // }, [patientId]);
+  
+  React.useEffect(() => {
+    if (patientId && patientRef.data) {
+      setPatient(patientRef.data);
+    }
+  }, [patientRef]);
 
   return (
     <>

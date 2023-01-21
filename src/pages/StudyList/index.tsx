@@ -1,25 +1,34 @@
 import React from "react";
 import { BackButton } from "components/BackButton";
 import { Column, Row, useTable } from "react-table";
-import { Link } from "react-router-dom";
-import { getStudies } from "api/studiesApi";
+import { useNavigate } from "react-router-dom";
+import { collection, getFirestore } from "firebase/firestore";
+import { useFirestoreCollectionData } from "reactfire";
 
 function StudyList() {
-  const [studies, setStudies] = React.useState([])
+  const studiesRef = collection(getFirestore(), "Studies");
+  const studiesCollection = useFirestoreCollectionData(studiesRef);
 
+  const [studies, setStudies] = React.useState([]);
+
+  const navigate = useNavigate();
   React.useEffect(() => {
-    getStudies().then((res) => {
-      console.log('res: ', res)
-      setStudies(res.data._embedded.studyList)
-    }, (err) => {
-      console.log(err)
-    })
-  }, [])
+    if (studiesCollection.data) {
+      // console.log(studiesCollection.data);
+      const newStudies: any = studiesCollection.data;
 
-  const data = React.useMemo(
-    () => studies,
-    [studies]
-  );
+      setStudies(newStudies);
+    }
+
+    // getStudies().then((res) => {
+    //   console.log('res: ', res)
+    //   setStudies(res.data._embedded.studyList)
+    // }, (err) => {
+    //   console.log(err)
+    // })
+  }, [studiesCollection.data]);
+
+  const data = React.useMemo(() => studies, [studies]);
 
   const columns: Column[] = React.useMemo(() => {
     return [
@@ -46,7 +55,7 @@ function StudyList() {
       },
       {
         Header: "Procedimiento",
-        accessor: "process",
+        accessor: "procedure",
       },
       {
         Header: "Estatus",
@@ -59,7 +68,7 @@ function StudyList() {
     ];
   }, []);
 
-  const tableHooks = (hooks: any) => {
+  const tableHooks: any = (hooks: any) => {
     hooks.visibleColumns.push((columns: Column[]) => [
       ...columns,
       {
@@ -67,11 +76,17 @@ function StudyList() {
         Header: "Acción",
         Cell: ({ row }: { row: Row }) => {
           return (
-            <Link to={`/StudyResumen/${row.values.id}/`}>
-              <button className="underline text-blue font-bold" type="button">
-                Atender
-              </button>
-            </Link>
+            <button
+              onClick={() =>
+                navigate("/StudyDetail", {
+                  state: { studyId: row.values.id },
+                })
+              }
+              className="underline text-tertiary font-bold"
+              type="button"
+            >
+              Atender
+            </button>
           );
         },
       },
@@ -88,7 +103,7 @@ function StudyList() {
 
   return (
     <>
-      <BackButton goTo={'/'} />
+      <BackButton goTo={"/"} />
       <div className="mx-6 mb-6">
         <h3 className="font-bold text-4xl">Lista de Estudios</h3>
       </div>
@@ -100,15 +115,15 @@ function StudyList() {
               // Loop over the header rows
               headerGroups.map((headerGroup) => (
                 // Apply the header row props
-                <tr {...headerGroup.getHeaderGroupProps()} className="bg-primary text-white">
+                <tr
+                  {...headerGroup.getHeaderGroupProps()}
+                  className="bg-primary text-white"
+                >
                   {
                     // Loop over the headers in each row
                     headerGroup.headers.map((column) => (
                       // Apply the header cell props
-                      <th
-                        {...column.getHeaderProps()}
-                        className="p-3"
-                      >
+                      <th {...column.getHeaderProps()} className="p-3">
                         {
                           // Render the header
                           column.render("Header")
@@ -128,7 +143,10 @@ function StudyList() {
                 prepareRow(row);
                 return (
                   // Apply the row props
-                  <tr {...row.getRowProps()} className="hover:shadow-tableRowShadow">
+                  <tr
+                    {...row.getRowProps()}
+                    className="hover:shadow-tableRowShadow"
+                  >
                     {
                       // Loop over the rows cells
                       row.cells.map((cell) => {

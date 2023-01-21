@@ -1,7 +1,14 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Gender, Patient } from "models/latrikModels";
 import * as Yup from "yup";
-import { addPatient } from "api/patientsApi";
+import {
+  addDoc,
+  doc,
+  setDoc,
+  getFirestore,
+  collection,
+} from "firebase/firestore";
+import React from "react";
 
 function StudyPatientForm({
   patient,
@@ -12,6 +19,16 @@ function StudyPatientForm({
   setPatient: Function;
   setIsLoading: Function;
 }) {
+  const patientsRef = collection(getFirestore(), "Patients");
+  const addPatient = async (values: Patient) => {
+    const snap = await addDoc(patientsRef, values);
+    values.id = snap.id;
+    setPatient(values);
+    return setDoc(doc(getFirestore(), "Patients", values.id), values);
+  };
+
+  const formRef = React.useRef<any>();
+
   const today: string = new Date().toISOString().split("T")[0];
 
   const resetForm = (action: Function) => {
@@ -33,8 +50,13 @@ function StudyPatientForm({
     }, 1);
   };
 
+  React.useEffect(() => {
+    if(patient) formRef.current.setValues(patient);
+  }, [patient]);
+
   return (
     <Formik
+      innerRef={formRef}
       initialValues={{
         id: patient?.id ? patient.id : "",
         patientId: patient?.patientId ? patient.patientId : "",
@@ -52,14 +74,13 @@ function StudyPatientForm({
         setSubmitting(true);
         setIsLoading(true);
         if (values.id !== undefined && values.id !== "") {
-          console.log("Actualizar paciente");
           setSubmitting(false);
           setIsLoading(false);
         } else if (values.id === undefined || values.id === "") {
           addPatient(values).then(
             (res) => {
-              console.log("res: ", res);
-              setPatient(res.data);
+              // console.log("res: ", res);
+              // setPatient(res.data);
               setSubmitting(false);
               setIsLoading(false);
             },

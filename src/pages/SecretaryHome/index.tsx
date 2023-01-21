@@ -1,11 +1,12 @@
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { ReactComponent as AddPersonSvg } from "assets/icons/AddPerson.svg";
 import { ReactComponent as ListCheckSvg } from "assets/icons/ListCheck.svg";
-import {ReactComponent as PeopleSvg } from "assets/icons/People.svg"
-import {ReactComponent as SettingsSvg} from "assets/icons/Settings.svg";
-import {ReactComponent as DocumentSvg} from "assets/icons/Document.svg";
+import { ReactComponent as PeopleSvg } from "assets/icons/People.svg";
+import { ReactComponent as SettingsSvg } from "assets/icons/Settings.svg";
+import { ReactComponent as DocumentSvg } from "assets/icons/Document.svg";
 
 export function SecretaryHome() {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="bg-primary w-full h-1/3 -z-10 fixed top-0">
@@ -66,26 +67,29 @@ export function SecretaryHome() {
             Configuración
           </button>
           <Link to={"/PatientForm"}>
-          <button
-            className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
-            type="button"
-            title="Pacientes"
-          >
-            <AddPersonSvg className="svg120 fill-white !mb-5" />            
-            Nuevo paciente
-          </button>
+            <button
+              className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
+              type="button"
+              title="Pacientes"
+            >
+              <AddPersonSvg className="svg120 fill-white !mb-5" />
+              Nuevo paciente
+            </button>
           </Link>
-          <Link to={'RegisterStudy'}>
-          
+
           <button
             className="filledPrimary py-4 px-8 mx-12 my-2 rounded-3xl w-[285px] h-[205px]"
             type="button"
             title="Estadísticas"
+            onClick={() =>
+              navigate("/RegisterStudy/", {
+                state: { patientId: 'undefined' },
+              })
+            }
           >
             <DocumentSvg className="svg120 fill-white !mb-5" />
             Nuevo estudio
           </button>
-          </Link>
         </div>
       </div>
     </div>

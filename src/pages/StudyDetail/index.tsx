@@ -1,31 +1,49 @@
 import { BackButton } from "components/BackButton";
 import { Study } from "models/latrikModels";
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import { getStudyById } from "api/studiesApi";
 import Loader from "components/Loader";
+import { useFirestoreDocDataOnce } from "reactfire";
+import {
+  collection,
+  addDoc,
+  setDoc,
+  doc,
+  getFirestore,
+} from "firebase/firestore";
 
 function StudyDetail() {
-  const { id } = useParams();
+  const { state } = useLocation();
+  const { studyId } = state;
+
+  const docRef = doc(getFirestore(), "Studies", studyId);
+  const studyRef: any = useFirestoreDocDataOnce(docRef);
+
   const [study, setStudy] = React.useState<Study>();
-  const [isLoading, setIsloading] = React.useState<boolean>(true);
+  const [isLoading, setIsloading] = React.useState<boolean>(false);
 
   useEffect(() => {
-    if (id) {
+    if (studyId) {
       setIsloading(true);
-      getStudyById(id).then(
-        (res) => {
-          console.log("res: ", res);
-          setStudy(res.data);
-          setIsloading(false);
-        },
-        (err) => {
-          console.log("err: ", err);
-          setIsloading(false);
-        }
-      );
+      if (studyId && studyRef.data) {
+        setStudy(studyRef.data);
+        setIsloading(false);
+      }
+      // setIsloading(true);
+      // getStudyById(studyId).then(
+      //   (res) => {
+      //     console.log("res: ", res);
+      //     setStudy(res.data);
+      //     setIsloading(false);
+      //   },
+      //   (err) => {
+      //     console.log("err: ", err);
+      //     setIsloading(false);
+      //   }
+      // );
     }
-  }, []);
+  }, [studyRef.data]);
 
   return (
     <>
@@ -33,7 +51,7 @@ function StudyDetail() {
       <section className="mb-6 max-w-7xl mx-auto text-shadow">
         <h3 className="font-bold text-4xl">Resumen de estudio </h3>
 
-        {study && (
+        {(study && study.patient) && (
           <div>
             <section className="bg-secondary rounded-[30px] my-10  py-16 px-10  shadow-buttonShadow text-2xl">
               <div className="flex justify-between items-center mb-5">

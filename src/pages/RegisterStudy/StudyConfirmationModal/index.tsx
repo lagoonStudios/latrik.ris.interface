@@ -1,7 +1,5 @@
 import { ReactComponent as InfoSvg } from "assets/icons/Info.svg";
 
-import { useNavigate } from "react-router";
-
 function StudyConfirmationModal({
   setShowConfirmationModal,
   createStudy,
