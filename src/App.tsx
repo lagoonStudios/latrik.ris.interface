@@ -3,7 +3,7 @@ import { SecretaryHome } from "./pages/SecretaryHome/index";
 import Layout from "pages/Layout";
 import StudyList from "pages/StudyList";
 import PatientList from "pages/PatientList";
-import StudyResumen from "pages/StudyDetail";
+import StudyDetail from "pages/StudyDetail";
 import PatientForm from 'pages/PatientForm';
 import RegisterStudy from 'pages/RegisterStudy';
 
@@ -17,7 +17,7 @@ function App() {
           <Route path="RegisterStudy" element={<RegisterStudy />} />
           <Route path="StudyList" element={<StudyList />} />
           <Route path="PatientList" element={<PatientList />} />
-          <Route path="StudyResumen/:id" element={<StudyResumen />} />
+          <Route path="StudyDetail" element={<StudyDetail />} />
           <Route path="*" element={<SecretaryHome />} />
         </Route>
       </Routes>

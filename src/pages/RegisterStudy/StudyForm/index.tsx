@@ -74,7 +74,9 @@ function StudyForm({
           status: "",
           priority: "0",
         }}
-        onSubmit={(values: any, { setSubmitting }) => {
+        onSubmit={(values: Study, { setSubmitting }) => {
+          values.patient = patient;
+          // console.log("Submit: ", values);
           if (values.patient) {
             setShowConfirmationModal(true);
             setStudy(values);
