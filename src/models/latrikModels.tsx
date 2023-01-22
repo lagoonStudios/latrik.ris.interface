@@ -2,13 +2,13 @@ export interface Study {
   id?:                 string;
   patient?:            Patient;
   studyDate:          string;
-  modality:           string;
+  modality:           Modality;
   studyInstanceUID?:   string;
   pacsUID?:            string;
   referringPhysician: string;
   procedure:          string;
-  status:             string;
-  priority:           string;
+  status:             Status;
+  priority:           StudyPriority;
 }
 
 export interface Patient {
@@ -18,7 +18,7 @@ export interface Patient {
   email:            string;
   phoneNumber:      string;
   birthDate:        string;
-  gender:           string;
+  gender:           Gender;
   allergies:        string;
   medicalCondition: string;
 }

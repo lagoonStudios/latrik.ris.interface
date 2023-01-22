@@ -109,7 +109,7 @@ function StudyList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full rounded-lg m-auto">
+        <table {...getTableProps()} className="w-full rounded-lg m-auto bg-white">
           <thead>
             {
               // Loop over the header rows

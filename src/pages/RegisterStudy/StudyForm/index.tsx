@@ -1,4 +1,4 @@
-import { Modality, Patient, Study, StudyPriority } from "models/latrikModels";
+import { Modality, Patient, Status, Study, StudyPriority } from "models/latrikModels";
 import React from "react";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from "yup";
@@ -69,10 +69,10 @@ function StudyForm({
           referringPhysician: "",
           patient: patient,
           studyDate: today,
-          modality: "0",
+          modality: Modality.CR,
           procedure: "",
-          status: "",
-          priority: "0",
+          status: Status.PENDING,
+          priority: StudyPriority.LOW,
         }}
         onSubmit={(values: Study, { setSubmitting }) => {
           values.patient = patient;
@@ -87,11 +87,15 @@ function StudyForm({
           modality: Yup.number().required("Requerido"),
           procedure: Yup.string()
             .max(30, "30 caracteres máximo")
-            .required("Requerido"),
+            .required("Requerido")
+            .ensure()
+            .trim(),
           priority: Yup.number().required("Requerido"),
           referringPhysician: Yup.string()
             .required("Requerido")
-            .max(30, "Máximo 30 caracteres"),
+            .max(30, "Máximo 30 caracteres")
+            .ensure()
+            .trim(),
         })}
       >
         {({ setValues }) => (

@@ -32,7 +32,7 @@ function StudyPatientForm({
     setDoc(doc(getFirestore(), "Patients", values.id), values).then(
       (res) => {},
       (err) => {
-        console.log('updatePatient err: ',err);
+        console.log("updatePatient err: ", err);
       }
     );
   };
@@ -74,7 +74,7 @@ function StudyPatientForm({
         email: patient?.email ? patient?.email : "",
         phoneNumber: patient?.phoneNumber ? patient.phoneNumber : "",
         birthDate: patient?.birthDate ? patient.birthDate : "",
-        gender: patient?.gender || "0",
+        gender: patient?.gender || Gender.Other,
         allergies: patient?.allergies ? patient.allergies : "",
         medicalCondition: patient?.medicalCondition
           ? patient.medicalCondition
@@ -104,16 +104,26 @@ function StudyPatientForm({
         }
       }}
       validationSchema={Yup.object({
-        patientId: Yup.string().required("Requerido"),
-        name: Yup.string().required("Requerido"),
-        email: Yup.string().email("Email inválido").required("Requerido"),
-        gender: Yup.string().required("Requerido"),
-        phoneNumber: Yup.string().max(15, "Máximo 15 caracteres"),
+        patientId: Yup.string().required("Requerido").ensure().trim(),
+        name: Yup.string().required("Requerido").ensure().trim(),
+        email: Yup.string()
+          .email("Email inválido")
+          .required("Requerido")
+          .ensure()
+          .trim(),
+        gender: Yup.string().required("Requerido").ensure().trim(),
+        phoneNumber: Yup.string()
+          .max(15, "Máximo 15 caracteres")
+          .ensure()
+          .trim(),
         birthDate: Yup.date()
           .max(today, "Fecha inválida")
           .required("Requerido"),
-        allergies: Yup.string().max(30, "Máximo 30 caracteres"),
-        medicalCondition: Yup.string().max(30, "Máximo 30 caracteres"),
+        allergies: Yup.string().max(30, "Máximo 30 caracteres").ensure(),
+        medicalCondition: Yup.string()
+          .max(30, "Máximo 30 caracteres")
+          .ensure()
+          .trim(),
       })}
     >
       {({ setValues }) => (

@@ -9,15 +9,21 @@ import { BackButton } from "components/BackButton";
 import Loader from "components/Loader";
 import PatientConfirmationModal from "./PatientConfirmationModal";
 
-import { addDoc, setDoc, doc, collection, getFirestore } from 'firebase/firestore';
+import {
+  addDoc,
+  setDoc,
+  doc,
+  collection,
+  getFirestore,
+} from "firebase/firestore";
 
 function PatientForm() {
   const patientsRef = collection(getFirestore(), "Patients");
- const addPatient = async (values: Patient) => {
+  const addPatient = async (values: Patient) => {
     const snap = await addDoc(patientsRef, values);
-    values.id = snap.id
+    values.id = snap.id;
     setPatient(values);
-    return setDoc(doc(getFirestore(), 'Patients', values.id), values);
+    return setDoc(doc(getFirestore(), "Patients", values.id), values);
   };
 
   const navigate = useNavigate();
@@ -57,7 +63,7 @@ function PatientForm() {
           email: patient?.email ? patient?.email : "",
           phoneNumber: patient?.phoneNumber ? patient.phoneNumber : "",
           birthDate: patient?.birthDate ? patient.birthDate : "",
-          gender: patient?.gender || "0",
+          gender: patient?.gender || Gender.Other,
           allergies: patient?.allergies ? patient.allergies : "",
           medicalCondition: patient?.medicalCondition
             ? patient.medicalCondition
@@ -68,9 +74,6 @@ function PatientForm() {
           setIsLoading(true);
           addPatient(values).then(
             (res: any) => {
-              // console.log("res: ", res);
-              const newPatient: Patient = values;
-              // newPatient.id = res.id;
               setSubmitting(false);
               setIsLoading(false);
               setShowConfirmation(true);
@@ -83,16 +86,29 @@ function PatientForm() {
           );
         }}
         validationSchema={Yup.object({
-          patientId: Yup.string().required("Requerido"),
-          name: Yup.string().required("Requerido"),
-          email: Yup.string().email("Email inválido").required("Requerido"),
-          gender: Yup.string().required("Requerido"),
-          phoneNumber: Yup.string().max(15, "Máximo 15 caracteres"),
+          patientId: Yup.string().required("Requerido").ensure().trim(),
+          name: Yup.string().required("Requerido").ensure().trim(),
+          email: Yup.string()
+            .email("Email inválido")
+            .required("Requerido")
+            .ensure()
+            .trim(),
+          gender: Yup.number().required("Requerido"),
+          phoneNumber: Yup.string()
+            .max(15, "Máximo 15 caracteres")
+            .ensure()
+            .trim(),
           birthDate: Yup.date()
             .max(today, "Fecha inválida")
             .required("Requerido"),
-          allergies: Yup.string().max(30, "Máximo 30 caracteres"),
-          medicalCondition: Yup.string().max(30, "Máximo 30 caracteres"),
+          allergies: Yup.string()
+            .max(30, "Máximo 30 caracteres")
+            .ensure()
+            .trim(),
+          medicalCondition: Yup.string()
+            .max(30, "Máximo 30 caracteres")
+            .ensure()
+            .trim(),
         })}
       >
         {({ isValid, setValues }) => (

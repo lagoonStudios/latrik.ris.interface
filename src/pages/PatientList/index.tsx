@@ -97,7 +97,7 @@ function PatientList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full">
+        <table {...getTableProps()} className="w-full rounded-lg m-auto bg-white">
           <thead className="h-8">
             {
               // Loop over the header rows
