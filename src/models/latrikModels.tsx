@@ -1,87 +1,71 @@
-export class Patient {
-    id?: string;
-    patientId: string;
-    name: string;
-    email: string;
-    phoneNumber?: string;
-    birthDate?: Date | string;
-    gender: 'Male' | 'Female' | 'Other';
-    allergies?: string;
-    medicalCondition?: string;
-  
-    constructor(data: any) {
-      this.id = data?.id || "";
-      this.patientId = data?.patientId || "";
-      this.name = data?.name || "";
-      this.email = data?.email || "";
-      this.phoneNumber = data?.phoneNumber || "";
-      this.birthDate = data?.birthDate || "";
-      this.gender = data?.gender || 'Otro';
-      this.allergies = data?.allergies || "";
-      this.medicalCondition = data?.medicalCondition || "";
-    }
-  }
-  
-  export class Study {
-    id: string;
-    patient_id: string;
-    studyDate: Date | string;
-    modality: 'CT' | 'MR' | 'PR' | 'CR';
-    process: string;
-    state: 'Espera' | 'Proceso' | 'Por informar' | 'Completado' | 'Cerrado' | 'Cancelado';
-    priority: 'Low' | 'Normal' | 'Urgent' | 'Emergency';
-    report?: any;
-    referentDoctorId?: string;
-    assignedTecnician?: string;
-    assignedDoctor?: string;
-    studyinstanceuid?: string;
-    pacsuid?: string;
-  
-    constructor(data: any) {
-      this.id = data.id;
-      this.patient_id = data.patient_id;
-      this.studyDate = data.studyDate;
-      this.modality = data.modality;
-      this.process = data.process;
-      this.state = data.state;
-      this.priority = data.priority;
-      this.report = data.report;
-      this.referentDoctorId = data.referentDoctorId;
-      this.assignedTecnician = data.assignedTecnician;
-      this.assignedDoctor = data.assignedDoctor;
-      this.studyinstanceuid = data.studyinstanceuid;
-      this.pacsuid = data.pacsuid;
-    }
-  }
-  
-  export class Gender {
-    name: 'Male' | 'Female' | 'Other'
-  
-    constructor(gender: 'Male' | 'Female' | 'Other'){
-      this.name = gender
-    }
-  }
-  
-  export enum Priority {
-    Low = "Low",
-    Normal = "Normal",
-    Urgent = "Urgent",
-    Emergency = "Emergency",
-  }
-  
-  export enum State {
-    "Espera",
-    "Proceso",
-    "Por informar",
-    "Completado",
-    "Cerrado",
-    "Cancelado",
-  }
-  
-  export enum Modality {
-    "CT",
-    "MR",
-    "PR",
-    "CR"
-  }
-  
+export interface Study {
+  id:                 string;
+  patient:            Patient;
+  studyDate:          string;
+  modality:           string;
+  studyInstanceUID:   string;
+  pacsUID:            string;
+  referringPhysician: string;
+  procedure:          string;
+  status:             string;
+  priority:           string;
+}
+
+export interface Patient {
+  id:               string;
+  name:             string;
+  patientId:        string;
+  email:            string;
+  phoneNumber:      string;
+  birthDate:        string;
+  gender:           string;
+  allergies:        string;
+  medicalCondition: string;
+}
+
+
+export enum Gender {
+  Male,
+  Female,
+  Other,
+  Na,
+}
+
+export enum StudyPriority {
+  LOW,
+  NORMAL,
+  URGENT,
+  EMERGENCY,
+}
+
+export enum Status {
+  PENDING,
+  IN_PROCESS,
+  TO_REPORT,
+  REPORTING,
+  REPORTED,
+  FINISHED,
+  SUSPENDED,
+  CANCELED,
+}
+
+export enum Modality {
+  CR,
+  DX,
+  CT,
+  MR,
+  XA,
+  MG,
+  US,
+  PT,
+  NM,
+  RF,
+  RG,
+  PX,
+  ES,
+  XC,
+  GM,
+  SC,
+  OT,
+  SR,
+}

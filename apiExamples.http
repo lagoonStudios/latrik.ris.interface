@@ -1,0 +1,21 @@
+###
+GET http://localhost:8080/patients HTTP/1.1
+
+###
+GET http://localhost:8080/patients/dd94add9-517a-49e7-a592-fc74782cb40a
+
+###
+POST http://localhost:8080/patients HTTP/1.1
+Content-Type: application/json
+
+{
+    "name": "Pablo",
+    "patientId": "v98984132",
+    "birthDate": "2023-01-13",
+    "gender": "Male",
+    "allergies": "",
+    "medicalCondition": ""
+}
+
+###
+DELETE http://localhost:8080/patients/8abb9e22-fbad-450f-a415-6852e5d2a75b HTTP/1.1
