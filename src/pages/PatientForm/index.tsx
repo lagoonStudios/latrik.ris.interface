@@ -171,7 +171,7 @@ function PatientForm() {
                 <ErrorMessage name="medicalCondition" />
               </p>
             </div>
-            <div className="flex justify-around mt-10 w-4/6 mx-auto">
+            <div className="flex justify-around my-10 w-4/6 mx-auto">
               <button
                 type="button"
                 onClick={() => {

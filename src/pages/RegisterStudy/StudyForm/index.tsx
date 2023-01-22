@@ -135,7 +135,7 @@ function StudyForm({
                   <ErrorMessage name="modality" />
                 </p>
 
-                <label htmlFor="referringPhysician">Médico asignado</label>
+                <label htmlFor="referringPhysician">Médico Referente</label>
                 <Field
                   id="referringPhysician"
                   name="referringPhysician"

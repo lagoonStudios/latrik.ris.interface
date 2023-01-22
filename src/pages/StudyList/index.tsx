@@ -4,6 +4,7 @@ import { Column, Row, useTable } from "react-table";
 import { useNavigate } from "react-router-dom";
 import { collection, getFirestore } from "firebase/firestore";
 import { useFirestoreCollectionData } from "reactfire";
+import { Modality, Status, Study, StudyPriority } from "models/latrikModels";
 
 function StudyList() {
   const studiesRef = collection(getFirestore(), "Studies");
@@ -27,6 +28,22 @@ function StudyList() {
     //   console.log(err)
     // })
   }, [studiesCollection.data]);
+
+  // const parsedStudies = (): Study[] => {
+  //   let newStudies = studies.map((study: any) => {
+  //     let modality = Modality[parseInt(study.modality)];
+  //     if (modality !== undefined) {
+  //       study.modality = modality;
+  //     }
+  //     let priority = StudyPriority[parseInt(study.priority)];
+  //     if (priority !== undefined) {
+  //       study.priority = priority;
+  //     }
+  //     return study;
+  //   });
+  //   console.log(newStudies)
+  //   return newStudies;
+  // };
 
   const data = React.useMemo(() => studies, [studies]);
 
@@ -52,6 +69,7 @@ function StudyList() {
       {
         Header: "Modalidad",
         accessor: "modality",
+        Cell: ({value}: {value: string}) => <label>{Modality[parseInt(value)]}</label>
       },
       {
         Header: "Procedimiento",
@@ -60,11 +78,17 @@ function StudyList() {
       {
         Header: "Estatus",
         accessor: "status",
+        Cell: ({value}: {value: number}) => <label>{Status[value]}</label>
       },
       {
         Header: "Prioridad",
         accessor: "priority",
+        Cell: ({value}: {value: string}) => <label>{StudyPriority[parseInt(value)]}</label>
       },
+      {
+        Header: "Médico referente",
+        accessor: "referringPhysician"
+      }
     ];
   }, []);
 
@@ -85,7 +109,7 @@ function StudyList() {
               className="underline text-tertiary font-bold"
               type="button"
             >
-              Atender
+              Detalle
             </button>
           );
         },
@@ -109,7 +133,10 @@ function StudyList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full rounded-lg m-auto bg-white">
+        <table
+          {...getTableProps()}
+          className="w-full rounded-lg m-auto bg-white"
+        >
           <thead>
             {
               // Loop over the header rows

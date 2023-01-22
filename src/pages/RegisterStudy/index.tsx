@@ -76,7 +76,7 @@ function RegisterStudy() {
     <>
       <BackButton goTo={-1} />
 
-      <div className="border-4 border-primary bg-white w-2/3 rounded-[40px] m-auto px-20 py-5">
+      <div className="border-4 border-primary bg-white w-2/3 rounded-[40px] m-auto mb-10 px-20 py-5">
         <h1 className="text-center text-black text-4xl font-bold mb-5">
           Registro de estudio
         </h1>

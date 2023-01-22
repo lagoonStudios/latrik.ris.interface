@@ -2,7 +2,7 @@ import { BackButton } from "components/BackButton";
 import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Column, Row, useTable } from "react-table";
-import { Patient } from "models/latrikModels";
+import { Gender, Patient } from "models/latrikModels";
 import { collection, getFirestore } from "firebase/firestore";
 import { useFirestoreCollectionData } from "reactfire";
 
@@ -43,6 +43,7 @@ function PatientList() {
       {
         Header: "Genero",
         accessor: "gender",
+        Cell: ({value}: {value: string}) => <label>{Gender[parseInt(value)]}</label>
       },
       {
         Header: "Fecha de nacimiento",
@@ -97,7 +98,10 @@ function PatientList() {
       </div>
 
       <div className="m-10">
-        <table {...getTableProps()} className="w-full rounded-lg m-auto bg-white">
+        <table
+          {...getTableProps()}
+          className="w-full rounded-lg m-auto bg-white"
+        >
           <thead className="h-8">
             {
               // Loop over the header rows
@@ -143,6 +147,9 @@ function PatientList() {
                           <td
                             {...cell.getCellProps()}
                             className="px-5 border border-tertiary p-3"
+                            onClick={() => {
+                              console.log(cell);
+                            }}
                           >
                             {
                               // Render the cell contents
