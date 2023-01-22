@@ -1,14 +1,25 @@
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
-import { Gender, Patient } from "models/latrikModels";
-import { addPatient } from "api/patientsApi";
 import React from "react";
+import { useNavigate } from "react-router";
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import * as Yup from "yup";
+
+import { Gender, Patient } from "models/latrikModels";
+
 import { BackButton } from "components/BackButton";
 import Loader from "components/Loader";
 import PatientConfirmationModal from "./PatientConfirmationModal";
-import { useNavigate } from "react-router";
+
+import { addDoc, setDoc, doc, collection, getFirestore } from 'firebase/firestore';
 
 function PatientForm() {
+  const patientsRef = collection(getFirestore(), "Patients");
+ const addPatient = async (values: Patient) => {
+    const snap = await addDoc(patientsRef, values);
+    values.id = snap.id
+    setPatient(values);
+    return setDoc(doc(getFirestore(), 'Patients', values.id), values);
+  };
+
   const navigate = useNavigate();
   const today: string = new Date().toISOString().split("T")[0];
   const [patient, setPatient] = React.useState<Patient>();
@@ -37,7 +48,7 @@ function PatientForm() {
 
   return (
     <>
-      <BackButton goTo={"/PatientList"} />
+      <BackButton goTo={-1} />
       <Formik
         initialValues={{
           id: "",
@@ -56,14 +67,15 @@ function PatientForm() {
           setSubmitting(true);
           setIsLoading(true);
           addPatient(values).then(
-            (res) => {
-              console.log("res: ", res);
-              setPatient(res.data);
+            (res: any) => {
+              // console.log("res: ", res);
+              const newPatient: Patient = values;
+              // newPatient.id = res.id;
               setSubmitting(false);
               setIsLoading(false);
               setShowConfirmation(true);
             },
-            (err) => {
+            (err: any) => {
               setSubmitting(false);
               setIsLoading(false);
               console.log("err", err);

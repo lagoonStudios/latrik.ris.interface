@@ -3,28 +3,25 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { Column, Row, useTable } from "react-table";
 import { Patient } from "models/latrikModels";
-import { getPatients } from "api/patientsApi";
-import Loader from "components/Loader";
+import { collection, getFirestore } from "firebase/firestore";
+import { useFirestoreCollectionData } from "reactfire";
 
 function PatientList() {
+  const patientsRef = collection(getFirestore(), "Patients");
+  const patientsCollection = useFirestoreCollectionData(patientsRef);
+
   const navigate = useNavigate();
   const [patients, setPatients] = React.useState<Patient[]>([]);
   const [isLoading, setIsloading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
-    setIsloading(true);
-    getPatients().then(
-      (res) => {
-        setPatients(res.data._embedded.patientList);
-        console.log(res);
-        setIsloading(false);
-      },
-      (err) => {
-        console.log(err);
-        setIsloading(false);
-      }
-    );
-  }, []);
+    if (patientsCollection.data) {
+      // console.log(patientsCollection.data);
+      const newPatients: any = patientsCollection.data;
+
+      setPatients(newPatients);
+    }
+  }, [patientsCollection.data]);
 
   const data = React.useMemo(() => patients, [patients]);
 
@@ -36,12 +33,12 @@ function PatientList() {
         show: false,
       },
       {
-        Header: "Doc. de identidad",
-        accessor: "patientId", // accessor is the "key" in the data
-      },
-      {
         Header: "Nombre",
         accessor: "name",
+      },
+      {
+        Header: "Doc. de identidad",
+        accessor: "patientId", // accessor is the "key" in the data
       },
       {
         Header: "Genero",
@@ -89,7 +86,7 @@ function PatientList() {
 
   return (
     <>
-      <BackButton goTo={'/'} />
+      <BackButton goTo={"/"} />
       <div className="mx-6 mb-6 flex justify-between">
         <h3 className="font-bold text-4xl">Lista de Pacientes</h3>
         <Link to={"/PatientForm"}>
