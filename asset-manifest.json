@@ -1,21 +1,21 @@
 {
   "files": {
-    "main.css": "/static/css/main.84216a60.css",
-    "main.js": "/static/js/main.86443229.js",
-    "static/media/People.svg": "/static/media/People.5932a85b5d9081d97caa7ac45059df0e.svg",
-    "static/media/ListCheck.svg": "/static/media/ListCheck.3abacf4e12d8629c4da84af8d9c45870.svg",
-    "static/media/AddPerson.svg": "/static/media/AddPerson.b6ae484723c3fabf0b591989e15a2348.svg",
-    "static/media/Document.svg": "/static/media/Document.584a7cf8bde6a0f5adc9bcb6ff243cd9.svg",
-    "static/media/Info.svg": "/static/media/Info.200842413768d037204989deda70b0cc.svg",
-    "static/media/Settings.svg": "/static/media/Settings.dac6f9c24665e5ce2e5000d9ddf8122d.svg",
-    "static/media/Check.svg": "/static/media/Check.db56dc3933e7febdfdf5d3e3c45d21dd.svg",
-    "index.html": "/index.html",
-    "static/media/ArrowSmallLeft.svg": "/static/media/ArrowSmallLeft.7ee4739ecca1c64f6d28903ff2cd2e4c.svg",
-    "main.84216a60.css.map": "/static/css/main.84216a60.css.map",
-    "main.86443229.js.map": "/static/js/main.86443229.js.map"
+    "main.css": "/latrik.ris.interface/static/css/main.84216a60.css",
+    "main.js": "/latrik.ris.interface/static/js/main.29f1cbe8.js",
+    "static/media/People.svg": "/latrik.ris.interface/static/media/People.5932a85b5d9081d97caa7ac45059df0e.svg",
+    "static/media/ListCheck.svg": "/latrik.ris.interface/static/media/ListCheck.3abacf4e12d8629c4da84af8d9c45870.svg",
+    "static/media/AddPerson.svg": "/latrik.ris.interface/static/media/AddPerson.b6ae484723c3fabf0b591989e15a2348.svg",
+    "static/media/Document.svg": "/latrik.ris.interface/static/media/Document.584a7cf8bde6a0f5adc9bcb6ff243cd9.svg",
+    "static/media/Info.svg": "/latrik.ris.interface/static/media/Info.200842413768d037204989deda70b0cc.svg",
+    "static/media/Settings.svg": "/latrik.ris.interface/static/media/Settings.dac6f9c24665e5ce2e5000d9ddf8122d.svg",
+    "static/media/Check.svg": "/latrik.ris.interface/static/media/Check.db56dc3933e7febdfdf5d3e3c45d21dd.svg",
+    "index.html": "/latrik.ris.interface/index.html",
+    "static/media/ArrowSmallLeft.svg": "/latrik.ris.interface/static/media/ArrowSmallLeft.7ee4739ecca1c64f6d28903ff2cd2e4c.svg",
+    "main.84216a60.css.map": "/latrik.ris.interface/static/css/main.84216a60.css.map",
+    "main.29f1cbe8.js.map": "/latrik.ris.interface/static/js/main.29f1cbe8.js.map"
   },
   "entrypoints": [
     "static/css/main.84216a60.css",
-    "static/js/main.86443229.js"
+    "static/js/main.29f1cbe8.js"
   ]
 }
