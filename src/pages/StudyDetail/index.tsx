@@ -2,13 +2,9 @@ import { BackButton } from "components/BackButton";
 import { Study } from "models/latrikModels";
 import React, { useEffect } from "react";
 import { useLocation } from "react-router-dom";
-import { getStudyById } from "api/studiesApi";
 import Loader from "components/Loader";
 import { useFirestoreDocDataOnce } from "reactfire";
 import {
-  collection,
-  addDoc,
-  setDoc,
   doc,
   getFirestore,
 } from "firebase/firestore";
@@ -43,7 +39,7 @@ function StudyDetail() {
       //   }
       // );
     }
-  }, [studyRef.data]);
+  }, [studyRef.data, studyId]);
 
   return (
     <>

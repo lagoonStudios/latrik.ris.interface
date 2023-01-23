@@ -4,7 +4,7 @@ import { Column, Row, useTable } from "react-table";
 import { useNavigate } from "react-router-dom";
 import { collection, getFirestore } from "firebase/firestore";
 import { useFirestoreCollectionData } from "reactfire";
-import { Modality, Status, Study, StudyPriority } from "models/latrikModels";
+import { Modality, Status, StudyPriority } from "models/latrikModels";
 
 function StudyList() {
   const studiesRef = collection(getFirestore(), "Studies");
@@ -15,35 +15,11 @@ function StudyList() {
   const navigate = useNavigate();
   React.useEffect(() => {
     if (studiesCollection.data) {
-      // console.log(studiesCollection.data);
       const newStudies: any = studiesCollection.data;
 
       setStudies(newStudies);
     }
-
-    // getStudies().then((res) => {
-    //   console.log('res: ', res)
-    //   setStudies(res.data._embedded.studyList)
-    // }, (err) => {
-    //   console.log(err)
-    // })
   }, [studiesCollection.data]);
-
-  // const parsedStudies = (): Study[] => {
-  //   let newStudies = studies.map((study: any) => {
-  //     let modality = Modality[parseInt(study.modality)];
-  //     if (modality !== undefined) {
-  //       study.modality = modality;
-  //     }
-  //     let priority = StudyPriority[parseInt(study.priority)];
-  //     if (priority !== undefined) {
-  //       study.priority = priority;
-  //     }
-  //     return study;
-  //   });
-  //   console.log(newStudies)
-  //   return newStudies;
-  // };
 
   const data = React.useMemo(() => studies, [studies]);
 

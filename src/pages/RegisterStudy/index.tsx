@@ -42,7 +42,7 @@ function RegisterStudy() {
         return setDoc(doc(getFirestore(), "Studies", study.id), study).then(
           (res) => {
             setIsLoading(false);
-            navigate('/');
+            navigate('/StudyDetail', {state: {studyId: study.id}});
           },
           (err) => {
             console.log("createStudy err: ", err);
@@ -70,7 +70,7 @@ function RegisterStudy() {
     if (patientId && patientRef.data) {
       setPatient(patientRef.data);
     }
-  }, [patientRef]);
+  }, [patientRef, patientId]);
 
   return (
     <>

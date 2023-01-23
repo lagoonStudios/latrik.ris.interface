@@ -12,11 +12,9 @@ function PatientList() {
 
   const navigate = useNavigate();
   const [patients, setPatients] = React.useState<Patient[]>([]);
-  const [isLoading, setIsloading] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     if (patientsCollection.data) {
-      // console.log(patientsCollection.data);
       const newPatients: any = patientsCollection.data;
 
       setPatients(newPatients);
