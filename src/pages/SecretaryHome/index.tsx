@@ -23,7 +23,7 @@ export function SecretaryHome() {
         <div className="flex justify-evenly mx-28 border-b pb-14">
           <Link to="/PatientList">
             <button
-              className="filledSecondary p-8 m-4 md:px-24 md:py-20 text-center rounded-3xl"
+              className="filledSecondary p-14 m-4 text-center rounded-3xl"
               type="button"
               title="Crear Nuevo Eestudio"
             >
@@ -37,7 +37,7 @@ export function SecretaryHome() {
           <div>
             <Link to="/StudyList">
               <button
-                className="filledSecondary p-8 m-4 md:px-24 md:py-20 text-center rounded-3xl"
+                className="filledSecondary p-14 m-4 text-center rounded-3xl"
                 type="button"
                 title="Lista de Estudios"
               >
