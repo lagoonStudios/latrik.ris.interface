@@ -45,26 +45,30 @@ function StudyList() {
       {
         Header: "Modalidad",
         accessor: "modality",
-        Cell: ({value}: {value: string}) => <label>{Modality[parseInt(value)]}</label>
+        Cell: ({ value }: { value: string }) => (
+          <label>{Modality[parseInt(value)]}</label>
+        ),
       },
       {
         Header: "Procedimiento",
         accessor: "procedure",
       },
       {
-        Header: "Estatus",
+        Header: "Estado",
         accessor: "status",
-        Cell: ({value}: {value: number}) => <label>{Status[value]}</label>
+        Cell: ({ value }: { value: number }) => <label>{Status[value]}</label>,
       },
       {
         Header: "Prioridad",
         accessor: "priority",
-        Cell: ({value}: {value: string}) => <label>{StudyPriority[parseInt(value)]}</label>
+        Cell: ({ value }: { value: string }) => (
+          <label>{StudyPriority[parseInt(value)]}</label>
+        ),
       },
       {
         Header: "Médico referente",
-        accessor: "referringPhysician"
-      }
+        accessor: "referringPhysician",
+      },
     ];
   }, []);
 
@@ -76,17 +80,26 @@ function StudyList() {
         Header: "Acción",
         Cell: ({ row }: { row: Row }) => {
           return (
-            <button
-              onClick={() =>
-                navigate("/StudyDetail", {
-                  state: { studyId: row.values.id },
-                })
-              }
-              className="underline text-tertiary font-bold"
-              type="button"
-            >
-              Detalle
-            </button>
+            <div>
+              <button
+                onClick={() =>
+                  navigate("/StudyDetail", {
+                    state: { studyId: row.values.id },
+                  })
+                }
+                className="underline text-tertiary font-bold"
+                type="button"
+              >
+                Detalle
+              </button>{" "}
+              <button
+                onClick={() => navigate("/DownloadStudy/" + row.values.id)}
+                className="underline text-tertiary font-bold"
+                type="button"
+              >
+                Descargar
+              </button>
+            </div>
           );
         },
       },

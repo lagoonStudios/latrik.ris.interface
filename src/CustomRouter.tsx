@@ -8,6 +8,7 @@ import PatientForm from "pages/PatientForm";
 import RegisterStudy from "pages/RegisterStudy";
 import Login from "pages/Login";
 import { useUser } from "reactfire";
+import DownloadStudy from "pages/DownloadStudy";
 
 function CustomRouter() {
   const user = useUser();
@@ -23,6 +24,7 @@ function CustomRouter() {
               <Route path="StudyList" element={<StudyList />} />
               <Route path="PatientList" element={<PatientList />} />
               <Route path="StudyDetail" element={<StudyDetail />} />
+              <Route path="DownloadStudy/:studyId" element={<DownloadStudy />} />
               <Route path="*" element={<SecretaryHome />} />
             </Route>
           </Routes>
@@ -31,10 +33,8 @@ function CustomRouter() {
       {!user.data && (
         <HashRouter basename="/">
           <Routes>
-            <Route path="/" element={<Login />}>
-              <Route path="Download/:id" element={<StudyDetail />} />
-              <Route path="*" element={<Login />} />
-            </Route>
+            <Route path="DownloadStudy/:studyId" element={<DownloadStudy />} />
+            <Route path="*" element={<Login />} />
           </Routes>
         </HashRouter>
       )}

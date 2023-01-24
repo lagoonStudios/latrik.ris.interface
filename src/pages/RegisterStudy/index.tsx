@@ -6,8 +6,9 @@ import Loader from "components/Loader";
 import StudyConfirmationModal from "./StudyConfirmationModal";
 import StudyForm from "./StudyForm";
 import StudyPatientForm from "./StudyPatientForm";
-import { useLocation, useNavigate } from 'react-router';
+import { useLocation, useNavigate } from "react-router";
 import { useFirestoreDocDataOnce } from "reactfire";
+import { toast } from "react-hot-toast";
 import {
   collection,
   addDoc,
@@ -41,10 +42,12 @@ function RegisterStudy() {
         setStudy(study);
         return setDoc(doc(getFirestore(), "Studies", study.id), study).then(
           (res) => {
+            toast.success("Estudio creado correctamente");
             setIsLoading(false);
-            navigate('/StudyDetail', {state: {studyId: study.id}});
+            navigate("/StudyDetail", { state: { studyId: study.id } });
           },
           (err) => {
+            toast.error("Ha ocurrido un error");
             console.log("createStudy err: ", err);
           }
         );

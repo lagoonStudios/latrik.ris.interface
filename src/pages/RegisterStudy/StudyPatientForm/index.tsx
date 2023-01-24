@@ -9,6 +9,7 @@ import {
   collection,
 } from "firebase/firestore";
 import React from "react";
+import { toast } from 'react-hot-toast';
 
 function StudyPatientForm({
   patient,
@@ -24,14 +25,24 @@ function StudyPatientForm({
     const snap = await addDoc(patientsRef, values);
     values.id = snap.id;
     setPatient(values);
-    return setDoc(doc(getFirestore(), "Patients", values.id), values);
+    return setDoc(doc(getFirestore(), "Patients", values.id), values).then(
+      (res) => {
+        toast.success("Paciente creado correctamente");
+      },
+      (err) => {
+        toast.error("Ha ocurrido un error");
+      }
+    );;
   };
 
   const updatePatient = async (values: Patient) => {
     setPatient(values);
     setDoc(doc(getFirestore(), "Patients", values.id), values).then(
-      (res) => {},
+      (res) => {
+        toast.success('Paciente actualizado con exito');
+      },
       (err) => {
+        toast.error('Ha ocurrido un error');
         console.log("updatePatient err: ", err);
       }
     );
@@ -173,9 +184,9 @@ function StudyPatientForm({
                   as="select"
                   disabled={patient !== undefined}
                 >
-                  <option value="0">Male</option>
-                  <option value="1">Female</option>
-                  <option value="2">Other</option>
+                  <option value="0">Hombre</option>
+                  <option value="1">Mujer</option>
+                  <option value="2">Otro</option>
                   <option value="3">Na</option>
                 </Field>
                 <p className="block mb-3 text-danger">

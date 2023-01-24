@@ -25,13 +25,20 @@ export interface Patient {
 
 
 export enum Gender {
+  "Hombre",
+  "Mujer",
+  "Otro",
+  "Na",
   Male,
   Female,
   Other,
-  Na,
 }
 
 export enum StudyPriority {
+  "Baja",
+  "Nomal",
+  "Urgente",
+  "Emergencia",
   LOW,
   NORMAL,
   URGENT,
@@ -39,6 +46,14 @@ export enum StudyPriority {
 }
 
 export enum Status {
+  "En espera",
+  "En procesos",
+  "Espera de reporte",
+  "Reportando",
+  "Reportado",
+  "Terminado",
+  "Suspendido",
+  "Cancelado",
   PENDING,
   IN_PROCESS,
   TO_REPORT,

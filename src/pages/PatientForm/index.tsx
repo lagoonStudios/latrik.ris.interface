@@ -8,6 +8,7 @@ import { Gender, Patient } from "models/latrikModels";
 import { BackButton } from "components/BackButton";
 import Loader from "components/Loader";
 import PatientConfirmationModal from "./PatientConfirmationModal";
+import { toast } from "react-hot-toast";
 
 import {
   addDoc,
@@ -23,7 +24,14 @@ function PatientForm() {
     const snap = await addDoc(patientsRef, values);
     values.id = snap.id;
     setPatient(values);
-    return setDoc(doc(getFirestore(), "Patients", values.id), values);
+    return setDoc(doc(getFirestore(), "Patients", values.id), values).then(
+      (res) => {
+        // toast.success("Paciente creado correctamente");
+      },
+      (err) => {
+        toast.error("Ha ocurrido un error");
+      }
+    );
   };
 
   const navigate = useNavigate();
@@ -144,9 +152,9 @@ function PatientForm() {
 
               <label htmlFor="gender">Género</label>
               <Field id="gender" name="gender" as="select">
-                <option value="0">Male</option>
-                <option value="1">Female</option>
-                <option value="2">Other</option>
+                <option value="0">Hombre</option>
+                <option value="1">Mujer</option>
+                <option value="2">Otro</option>
                 <option value="3">Na</option>
               </Field>
               <p className="block mb-3 text-danger">

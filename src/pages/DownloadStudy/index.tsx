@@ -1,30 +1,34 @@
-import { BackButton } from "components/BackButton";
-import { Gender, Modality, Study, StudyPriority } from "models/latrikModels";
-import React, { useEffect } from "react";
-import { useLocation } from "react-router-dom";
+import { useParams } from "react-router";
+import React from "react";
+import { useFirestoreDocDataOnce, useUser } from "reactfire";
+import { doc, getFirestore } from "firebase/firestore";
 import Loader from "components/Loader";
-import { useFirestoreDocDataOnce } from "reactfire";
-import { toast } from 'react-hot-toast';
-import {
-  doc,
-  getFirestore,
-} from "firebase/firestore";
+import { Gender, Study } from "models/latrikModels";
+import { Modality } from "models/latrikModels";
+import { BackButton } from "components/BackButton";
 
-function StudyDetail() {
-  const { state } = useLocation();
-  const { studyId } = state;
-
-  const docRef = doc(getFirestore(), "Studies", studyId);
-  const studyRef: any = useFirestoreDocDataOnce(docRef);
-
+function DownloadStudy() {
+  const { studyId } = useParams();
   const [study, setStudy] = React.useState<Study>();
   const [isLoading, setIsloading] = React.useState<boolean>(false);
 
-  useEffect(() => {
+  let id: string = "";
+  studyId === undefined ? (id = "undefined") : (id = studyId);
+
+  const docRef = doc(getFirestore(), "Studies", id);
+  const studyRef: any = useFirestoreDocDataOnce(docRef);
+
+  const user = useUser();
+
+  React.useEffect(() => {
+    console.log(study)
     if (studyId) {
       setIsloading(true);
       if (studyId && studyRef.data) {
         setStudy(studyRef.data);
+        setIsloading(false);
+        console.log(study)
+      }else{
         setIsloading(false);
       }
       // setIsloading(true);
@@ -39,21 +43,19 @@ function StudyDetail() {
       //     setIsloading(false);
       //   }
       // );
-    }else{
-      toast.error('No se pudo encontrar el estudio')
     }
-  }, [studyRef.data, studyId]);
+  }, [studyRef.data]);
 
   return (
     <>
-      <BackButton goTo={"/StudyList"} />
-      <section className="mb-6 max-w-7xl mx-auto text-shadow">
-        <h3 className="font-bold text-4xl">Resumen de estudio </h3>
+    {user.data && <BackButton goTo={-1} />}
+      <section className="mb-6 max-w-7xl mx-auto mt-[5vh] text-shadow">
+        <h3 className="font-bold text-4xl">Descargar estudio</h3>
 
-        {(study && study.patient) && (
+        {study && study.patient && (
           <div>
             <section className="bg-secondary rounded-[30px] my-10  py-16 px-10  shadow-buttonShadow text-2xl">
-              <div className="flex justify-between items-center mb-5">
+              <div className="mb-5">
                 <div>
                   <h3 className="font-bold text-6xl text-black">
                     {study.patient.name}
@@ -65,10 +67,15 @@ function StudyDetail() {
                     {study.patient.patientId}
                   </p>
                 </div>
-                <div className="bg-success h-16 w-64 rounded-[20px] flex justify-center items-center  text-white text-3xl font-extrabold shadow-buttonShadow text-shadow-none">
-                  {StudyPriority[study.priority]}
-                </div>
               </div>
+              {/* <div className="flex justify-around items-center my-5 text-2xl">
+              <div className="bg-green w-fit min-w-[8rem] px-3 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
+                {study.modality}
+              </div>
+              <div className="bg-orange w-fit min-w-[8rem] px-3 mx-5 rounded-3xl text-center text-white font-extrabold shadow-buttonShadow">
+                {study.procedure}
+              </div>
+            </div> */}
 
               <div className="grid grid-cols-2">
                 <div className="col-span-1">
@@ -78,9 +85,7 @@ function StudyDetail() {
                       {Gender[study.patient.gender]}
                     </p>
                     <p>
-                      <label className="font-bold">
-                        Fecha de nacimiento:{" "}
-                      </label>
+                      <label className="font-bold">Fecha de nacimiento: </label>
                       {study.patient.birthDate?.toString()}
                     </p>
                     <p>
@@ -94,9 +99,7 @@ function StudyDetail() {
                         : "Sin detalles"}
                     </p>
                     <p>
-                      <label className="font-bold">
-                        Condición médica:{" "}
-                      </label>
+                      <label className="font-bold">Condición médica: </label>
 
                       {study.patient.medicalCondition
                         ? study.patient.medicalCondition
@@ -126,7 +129,7 @@ function StudyDetail() {
                 type="button"
                 title="Finalizar estudio"
               >
-                Finalizar estudio
+                Descargar
               </button>
             </div>
           </div>
@@ -138,4 +141,4 @@ function StudyDetail() {
   );
 }
 
-export default StudyDetail;
+export default DownloadStudy;

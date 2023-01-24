@@ -1,15 +1,17 @@
 
-import { AuthProvider, useFirebaseApp, useUser } from "reactfire";
+import { AuthProvider, useFirebaseApp } from "reactfire";
 import { getAuth } from "firebase/auth";
 import CustomRouter from "CustomRouter";
+import { Toaster } from "react-hot-toast";
 
 function App() {
   const firebase = useFirebaseApp();
   const auth = getAuth(firebase);
-  // const user = useUser();
+
   return (
     <AuthProvider sdk={auth}>
       <CustomRouter />
+      <Toaster position="top-right" toastOptions={{id: 'toast'}} />
     </AuthProvider>
   );
 }
